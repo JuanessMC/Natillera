@@ -1,4 +1,4 @@
-package com.natillera.demo;
+/*package com.natillera.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class NatilleraApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/

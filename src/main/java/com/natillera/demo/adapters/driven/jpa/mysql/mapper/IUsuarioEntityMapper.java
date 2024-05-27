@@ -1,4 +1,4 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.mapper;
 
-public interface Mapper {
+public interface IUsuarioEntityMapper {
 }
