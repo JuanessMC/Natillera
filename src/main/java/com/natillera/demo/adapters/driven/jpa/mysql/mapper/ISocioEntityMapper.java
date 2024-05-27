@@ -18,12 +18,6 @@ public interface ISocioEntityMapper {
     Socio toModel(SocioEntity socioEntity);
 
     @Mapping(source = "salarioMensual", target = "salarioMensual")
-    @Mapping(source = "estado", target = "usuario.estado")
-    @Mapping(source = "correoElectronico", target = "usuario.correoElectronico")
-    @Mapping(source = "fechaNacimiento", target = "usuario.fechaNacimiento")
-    @Mapping(source = "apellidos", target = "usuario.apellidos")
-    @Mapping(source = "nombre", target = "usuario.nombre")
-    @Mapping(source = "cedula", target = "usuario.cedula")
     @Mapping(source = "cedula", target = "cedula")
     SocioEntity toEntity(Socio socio);
 }
