@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost/DBNATILLERA
+    url: jdbc:mysql://localhost/dbnatillera
     username: ${username}
     password: ${password}
   jpa:

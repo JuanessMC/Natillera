@@ -1,15 +1,19 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "usuario")
@@ -20,10 +24,24 @@ import java.util.Date;
 @EqualsAndHashCode
 public class UsuarioEntity {
     @Id
+    @Column(name = "cedula")
     private Long cedula;
+
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "apellidos")
     private String apellidos;
-    private Date fechaNacimiento;
+
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
+
+    @Column(name = "correo_electronico")
     private String correoElectronico;
+
+    @Column(name = "estado")
     private boolean estado;
+
+    @OneToOne(mappedBy = "usuario")
+    private SocioEntity bootCampsList;
 }

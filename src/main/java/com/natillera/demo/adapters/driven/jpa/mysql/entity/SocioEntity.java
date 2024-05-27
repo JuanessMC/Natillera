@@ -1,11 +1,11 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,13 +18,15 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 public class SocioEntity {
     @Id
+    @Column(name = "cedula")
     private Long cedula;
+
+    @Column(name = "salario_mensual")
     private float salarioMensual;
 
     @OneToOne
-    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    @JoinColumn(name = "cedula")
     private UsuarioEntity usuario;
 }
