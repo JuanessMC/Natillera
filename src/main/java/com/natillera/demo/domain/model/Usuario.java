@@ -3,15 +3,15 @@ package com.natillera.demo.domain.model;
 import java.time.LocalDate;
 
 public abstract class Usuario {
-    private final long documento;
+    private final long cedula;
     private final String nombre;
     private final String apellidos;
     private final LocalDate fechaNacimiento;
     private final String correoElectronico;
     private final boolean estado;
 
-    public Usuario(long documento, String nombre, String apellidos, LocalDate fechaNacimiento, String correoElectronico, boolean estado) {
-        this.documento = documento;
+    protected Usuario(long cedula, String nombre, String apellidos, LocalDate fechaNacimiento, String correoElectronico, boolean estado) {
+        this.cedula = cedula;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
@@ -19,8 +19,8 @@ public abstract class Usuario {
         this.estado = estado;
     }
 
-    public long getDocumento() {
-        return documento;
+    public long getCedula() {
+        return cedula;
     }
 
     public String getNombre() {

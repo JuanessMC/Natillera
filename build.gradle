@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.2.5'
+	id 'org.springframework.boot' version '3.2.6'
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -24,6 +24,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Incluye JPA y Hibernate
 	implementation 'org.springframework.boot:spring-boot-starter-web' // Para crear aplicaciones web y REST endpoints
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	compileOnly 'org.projectlombok:lombok' // Lombok para reducir código boilerplate
 	developmentOnly 'org.springframework.boot:spring-boot-devtools' // Herramientas de desarrollo
 	runtimeOnly 'com.mysql:mysql-connector-j' // Conector JDBC para MySQL

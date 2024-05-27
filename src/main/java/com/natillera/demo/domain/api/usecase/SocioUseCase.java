@@ -1,20 +1,18 @@
 package com.natillera.demo.domain.api.usecase;
 
-import com.natillera.demo.domain.api.ISocioUseCase;
+import com.natillera.demo.domain.api.ISocioServicePort;
 import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+public class SocioUseCase implements ISocioServicePort {
 
+    private final ISocioPersistencePort socioPersistencePort;
 
-@Service
-@RequiredArgsConstructor
-public class SocioUseCase implements ISocioUseCase {
-
-    private final ISocioPersistencePort ISocioPersistencePort;
+    public SocioUseCase(ISocioPersistencePort socioPersistencePort) {
+        this.socioPersistencePort = socioPersistencePort;
+    }
 
     @Override
-    public void AddSocio(Socio socio) {
-        ISocioPersistencePort.saveSocio(socio);
+    public void addSocio(Socio socio) {
+        socioPersistencePort.saveSocio(socio);
     }
 }
