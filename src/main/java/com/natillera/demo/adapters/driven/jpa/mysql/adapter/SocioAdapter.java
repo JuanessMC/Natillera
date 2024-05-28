@@ -14,20 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SocioAdapter implements ISocioPersistencePort {
 
-    private final ISocioRepository socioRepository;
-    private final ISocioEntityMapper socioEntityMapper;
     private final IUsuarioRepository usuarioRepository;
     private final IUsuarioEntityMapper usuarioEntityMapper;
 
     @Override
     public void saveSocio(Socio socio) {
         try {
+            UsuarioEntity prueba = usuarioRepository.findByCedula(3456789012l);
             UsuarioEntity usuarioEntity = usuarioEntityMapper.toEntity(socio);
             usuarioRepository.save(usuarioEntity);
-
-            SocioEntity socioEntity = socioEntityMapper.toEntity(socio);
-            socioRepository.save(socioEntity);
-
         }catch (Exception e)
         {
             String error = e.getMessage();

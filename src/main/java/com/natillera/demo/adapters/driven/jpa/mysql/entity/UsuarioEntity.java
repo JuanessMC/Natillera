@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.web.ConditionalOnEnabledResourceChain;
 
 
 import javax.persistence.Column;
@@ -43,5 +44,8 @@ public class UsuarioEntity {
     private boolean estado;
 
     @OneToOne(mappedBy = "usuario")
-    private SocioEntity bootCampsList;
+    private SocioEntity socio;
+
+    @OneToOne(mappedBy = "usuario")
+    private CuentaEntity cuenta;
 }

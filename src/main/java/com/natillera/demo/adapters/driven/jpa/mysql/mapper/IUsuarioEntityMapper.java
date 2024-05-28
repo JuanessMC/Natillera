@@ -13,5 +13,7 @@ public interface IUsuarioEntityMapper {
     @Mapping(source = "apellidos", target = "apellidos")
     @Mapping(source = "nombre", target = "nombre")
     @Mapping(source = "cedula", target = "cedula")
+    @Mapping(source = "cedula", target = "socio.cedula")
+    @Mapping(source = "salarioMensual", target = "socio.salarioMensual")
     UsuarioEntity toEntity(Socio socio);
 }

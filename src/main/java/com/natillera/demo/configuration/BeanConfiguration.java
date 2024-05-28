@@ -15,15 +15,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfiguration {
-    private final ISocioRepository socioRepository;
-    private final ISocioEntityMapper socioEntityMapper;
+
     private final IUsuarioRepository usuarioRepository;
     private final IUsuarioEntityMapper usuarioEntityMapper;
 
     @Bean
     public ISocioPersistencePort socioPersistencePort()
     {
-        return new SocioAdapter(socioRepository, socioEntityMapper, usuarioRepository, usuarioEntityMapper);
+        return new SocioAdapter(usuarioRepository, usuarioEntityMapper);
     }
 
     @Bean
