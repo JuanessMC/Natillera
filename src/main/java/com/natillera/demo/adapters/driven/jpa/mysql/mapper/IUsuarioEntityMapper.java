@@ -15,5 +15,9 @@ public interface IUsuarioEntityMapper {
     @Mapping(source = "cedula", target = "cedula")
     @Mapping(source = "cedula", target = "socio.cedula")
     @Mapping(source = "salarioMensual", target = "socio.salarioMensual")
+    @Mapping(source = "cuenta.nombreBanco", target = "cuenta.nombreBanco")
+    @Mapping(source = "cuenta.numeroCuenta", target = "cuenta.numeroCuenta")
+    @Mapping(source = "cuenta.tipoCuenta.id", target = "cuenta.tipoCuenta.id")
+    @Mapping(source = "cedula", target = "cuenta.usuario.cedula")
     UsuarioEntity toEntity(Socio socio);
 }

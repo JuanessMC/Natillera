@@ -7,15 +7,13 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "cuenta")
@@ -26,14 +24,15 @@ import java.util.Set;
 public class CuentaEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cuenta")
     private String id;
 
     @Column(name = "nombre_banco")
     private String nombreBanco;
 
-    @Column(name = "nombre_cuenta")
-    private String nombreCuenta;
+    @Column(name = "numero_cuenta")
+    private long numeroCuenta;
 
     @OneToOne
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
