@@ -5,13 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
 @Table(name = "tipo_cuenta")
@@ -21,12 +20,10 @@ import java.util.List;
 @Setter
 public class TipoCuentaEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipo_cuenta")
     private long id;
 
     @Column(name = "tipo_cuenta")
     private String tipoCuenta;
-
-    @OneToMany(mappedBy = "tipoCuenta", cascade = CascadeType.ALL)
-    private List<CuentaEntity> cuentas;
 }

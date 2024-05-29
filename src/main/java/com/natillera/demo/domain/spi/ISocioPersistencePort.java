@@ -4,4 +4,6 @@ import com.natillera.demo.domain.model.Socio;
 
 public interface ISocioPersistencePort {
     void saveSocio(Socio socio);
+    Socio getSocio(long id);
+
 }

@@ -2,6 +2,7 @@ package com.natillera.demo.configuration;
 
 import com.natillera.demo.adapters.driven.jpa.mysql.adapter.SocioAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IUsuarioEntityMapper;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.ITipoCuentaRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
 import com.natillera.demo.domain.api.ISocioServicePort;
 import com.natillera.demo.domain.api.usecase.SocioUseCase;
@@ -16,11 +17,12 @@ public class BeanConfiguration {
 
     private final IUsuarioRepository usuarioRepository;
     private final IUsuarioEntityMapper usuarioEntityMapper;
+    private final ITipoCuentaRepository tipoCuentaRepository;
 
     @Bean
     public ISocioPersistencePort socioPersistencePort()
     {
-        return new SocioAdapter(usuarioRepository, usuarioEntityMapper);
+        return new SocioAdapter(usuarioRepository, usuarioEntityMapper, tipoCuentaRepository);
     }
 
     @Bean

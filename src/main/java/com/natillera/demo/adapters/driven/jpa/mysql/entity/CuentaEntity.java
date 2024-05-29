@@ -35,7 +35,7 @@ public class CuentaEntity {
     private long numeroCuenta;
 
     @OneToOne
-    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    @JoinColumn(name = "cedula")
     private UsuarioEntity usuario;
 
     @ManyToOne
