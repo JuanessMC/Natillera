@@ -10,6 +10,8 @@ public abstract class Usuario {
     private final String correoElectronico;
     private final boolean estado;
 
+    private Cuenta cuenta;
+
     protected Usuario(long cedula, String nombre, String apellidos, LocalDate fechaNacimiento, String correoElectronico, boolean estado) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -41,5 +43,13 @@ public abstract class Usuario {
 
     public boolean isEstado() {
         return estado;
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 }

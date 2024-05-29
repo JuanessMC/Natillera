@@ -15,4 +15,9 @@ public class SocioUseCase implements ISocioServicePort {
     public void addSocio(Socio socio) {
         socioPersistencePort.saveSocio(socio);
     }
+
+    @Override
+    public Socio getSocio(long id) {
+        return socioPersistencePort.getSocio(id);
+    }
 }
