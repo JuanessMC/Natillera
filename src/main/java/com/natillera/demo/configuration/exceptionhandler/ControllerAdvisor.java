@@ -17,6 +17,6 @@ public class ControllerAdvisor {
     public ResponseEntity<ExceptionResponse> handleNegativeNotAllowedException(NegativeNotAllowedException exception)
     {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
-                exception.getMessage(), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
+                exception.getMessage(), 400, LocalDateTime.now()));
     }
 }

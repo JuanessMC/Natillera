@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public class ExceptionResponse {
     private final String message;
-    private final String status;
+    private final int status;
     private final LocalDateTime timestamp;
 
-    public ExceptionResponse(String message, String status, LocalDateTime timestamp) {
+    public ExceptionResponse(String message, int status, LocalDateTime timestamp) {
         this.message = message;
         this.status = status;
         this.timestamp = timestamp;
@@ -17,7 +17,7 @@ public class ExceptionResponse {
         return message;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
