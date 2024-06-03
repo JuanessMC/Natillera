@@ -48,4 +48,16 @@ public class SocioAdapter implements ISocioPersistencePort {
             throw new NegativeNotAllowedException(e.getMessage());
         }
     }
+
+    @Override
+    public void updateSocio(Socio socio) {
+        try {
+            UsuarioEntity usuarioEntity = usuarioRepository.findByCedula(socio.getCedula());
+            usuarioEntity.setEstado(socio.isEstado());
+            usuarioRepository.updateByCedula(usuarioEntity, usuarioEntity.getCedula());
+        }catch (Exception e)
+        {
+            throw new NegativeNotAllowedException(e.getMessage());
+        }
+    }
 }

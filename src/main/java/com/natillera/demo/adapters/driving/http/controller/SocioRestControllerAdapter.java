@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,5 +68,14 @@ public class SocioRestControllerAdapter {
         response.setData(socioResponseList);
 
         return ResponseEntity.ok(response);
+    }
+    @PutMapping("/update")
+    public ResponseEntity<StandardResponse<SocioResponse>> updateSocio(@RequestBody AddSocioRequest addSocioRequest) {
+        socioServicePort.updateSocio(socioRequestMapper.addRequestToUsuario(addSocioRequest));
+        return ResponseEntity.ok(new StandardResponse<>(
+                        "El socio fue actualizado satisfactoriamente",
+                        200,
+                        LocalDateTime.now().toString())
+                );
     }
 }
