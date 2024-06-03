@@ -9,8 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "socio")
@@ -29,4 +31,8 @@ public class SocioEntity {
     @OneToOne
     @JoinColumn(name = "cedula")
     private UsuarioEntity usuario;
+
+    @OneToMany(mappedBy = "socio")
+    List<PrestamoEntity> prestamos;
+
 }
