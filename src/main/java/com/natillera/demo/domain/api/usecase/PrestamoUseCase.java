@@ -16,16 +16,16 @@ public class PrestamoUseCase implements IPrestamoServicePort {
 
     @Override
     public List<Prestamo> getAllPrestamos() {
-        return List.of();
+        return prestamoPersistencePort.getAllPrestamos();
     }
 
     @Override
     public Prestamo getPrestamoById(Long idPrestamo) {
-        return null;
+        return prestamoPersistencePort.getPrestamoById(idPrestamo);
     }
 
     @Override
     public void updatePrestamo(Prestamo prestamo) {
-
+        prestamoPersistencePort.updatePrestamo(prestamo);
     }
 }
