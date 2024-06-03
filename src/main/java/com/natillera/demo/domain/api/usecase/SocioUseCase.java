@@ -28,4 +28,9 @@ public class SocioUseCase implements ISocioServicePort {
     public List<Socio> getAllSocio() {
         return socioPersistencePort.getAllSocio();
     }
+
+    @Override
+    public void updateSocio(Socio socio) {
+        socioPersistencePort.updateSocio(socio);
+    }
 }
