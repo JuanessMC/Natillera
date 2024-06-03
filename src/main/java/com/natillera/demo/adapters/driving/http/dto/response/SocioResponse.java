@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class SocioResponse {
     private final long cedula;
-    private final String nombre;
+    private final String nombres;
     private final String apellidos;
-    private final String fechaNacimiento;
-    private final String correoElectronico;
+    private final String fecha;
+    private final String correo;
     private final boolean estado;
-    private final float salarioMensual;
-    private final String nombreBanco;
-    private final long numeroCuenta;
+    private final String banco;
+    private final long numerodecuenta;
     private final long idTipoCuenta;
+    private final String tipodecuenta;
 }

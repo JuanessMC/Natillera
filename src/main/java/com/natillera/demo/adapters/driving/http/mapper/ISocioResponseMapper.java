@@ -10,15 +10,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ISocioResponseMapper {
     @Mapping(target = "idTipoCuenta", source = "cuenta.tipoCuenta.id")
-    @Mapping(target = "numeroCuenta", source = "cuenta.numeroCuenta")
-    @Mapping(target = "nombreBanco", source = "cuenta.nombreBanco")
-    @Mapping(target = "salarioMensual", source = "salarioMensual")
+    @Mapping(target = "numerodecuenta", source = "cuenta.numeroCuenta")
+    @Mapping(target = "banco", source = "cuenta.nombreBanco")
     @Mapping(target = "estado", source = "estado")
-    @Mapping(target = "correoElectronico", source = "correoElectronico")
-    @Mapping(target = "fechaNacimiento", source = "fechaNacimiento")
+    @Mapping(target = "correo", source = "correoElectronico")
+    @Mapping(target = "fecha", source = "fechaNacimiento")
     @Mapping(target = "apellidos", source = "apellidos")
-    @Mapping(target = "nombre", source = "nombre")
+    @Mapping(target = "nombres", source = "nombre")
     @Mapping(target = "cedula", source = "cedula")
+    @Mapping(target = "tipodecuenta", source = "cuenta.tipoCuenta.nombre")
     SocioResponse addRequestToUsuario(Socio socio);
     List<SocioResponse> addRequestToUsuarioList(List<Socio> socio);
 }

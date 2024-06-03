@@ -33,6 +33,7 @@ public interface IUsuarioEntityMapper {
     @Mapping(target = "cuenta.nombreBanco", source = "cuenta.nombreBanco")
     @Mapping(target = "cuenta.numeroCuenta", source = "cuenta.numeroCuenta")
     @Mapping(target = "cuenta.tipoCuenta.id", source = "cuenta.tipoCuenta.id")
+    @Mapping(target = "cuenta.tipoCuenta.nombre", source = "cuenta.tipoCuenta.nombre")
     Socio toModel(UsuarioEntity usuarioEntity);
     List<Socio> toModelList(List<UsuarioEntity> usuarioEntityList);
 }
