@@ -25,5 +25,5 @@ public class TipoCuentaEntity {
     private long id;
 
     @Column(name = "tipo_cuenta")
-    private String tipoCuenta;
+    private String nombre;
 }
