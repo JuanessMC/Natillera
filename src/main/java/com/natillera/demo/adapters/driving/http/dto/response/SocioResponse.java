@@ -3,8 +3,6 @@ package com.natillera.demo.adapters.driving.http.dto.response;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
-
 @RequiredArgsConstructor
 @Getter
 public class SocioResponse {

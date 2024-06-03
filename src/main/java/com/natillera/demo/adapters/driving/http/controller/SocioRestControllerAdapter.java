@@ -10,6 +10,7 @@ import com.natillera.demo.domain.api.ISocioServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,28 +23,29 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/socio")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class SocioRestControllerAdapter {
+
     private final ISocioServicePort socioServicePort;
     private final ISocioRequestMapper socioRequestMapper;
     private final ISocioResponseMapper socioResponseMapper;
+
     @PostMapping("/")
-    public ResponseEntity<StandardResponse<SocioResponse>> addSocio(@RequestBody AddSocioRequest addSocioRequest)
-    {
+    public ResponseEntity<StandardResponse<SocioResponse>> addSocio(@RequestBody AddSocioRequest addSocioRequest) {
         socioServicePort.addSocio(socioRequestMapper.addRequestToUsuario(addSocioRequest));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new StandardResponse<>(
-                        "The socio has been successfully recorded",
+                        "El socio fue creado satisfactoriamente",
                         201,
                         LocalDateTime.now().toString())
                 );
     }
 
     @GetMapping("/")
-    public ResponseEntity<StandardResponse<SocioResponse>> getSocio(@RequestParam long id)
-    {
+    public ResponseEntity<StandardResponse<SocioResponse>> getSocio(@RequestParam long id) {
         SocioResponse socioResponse = socioResponseMapper.addRequestToUsuario(socioServicePort.getSocio(id));
         StandardResponse<SocioResponse> response = new StandardResponse<>(
-                "",
+                "Socio obtenido correctamente",
                 200,
                 LocalDateTime.now().toString()
         );
@@ -52,14 +54,13 @@ public class SocioRestControllerAdapter {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/all/")
-    public ResponseEntity<StandardResponse<SocioResponseList>> getAllSocio()
-    {
+    @GetMapping("/all")
+    public ResponseEntity<StandardResponse<SocioResponseList>> getAllSocios() {
         SocioResponseList socioResponseList = new SocioResponseList();
         socioResponseList.setResponseList(socioResponseMapper.addRequestToUsuarioList(socioServicePort.getAllSocio()));
 
         StandardResponse<SocioResponseList> response = new StandardResponse<>(
-                "",
+                "Todos los socios fueron obtenidos correctamente",
                 200,
                 LocalDateTime.now().toString()
         );

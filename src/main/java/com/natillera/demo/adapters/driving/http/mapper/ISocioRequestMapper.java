@@ -18,7 +18,6 @@ public interface ISocioRequestMapper {
     @Mapping(source = "nombre", target = "nombre")
     @Mapping(source = "cedula", target = "cedula")
     Socio addRequestToUsuario(AddSocioRequest addSocioRequest);
-
     @Mapping(target = "idTipoCuenta", source = "cuenta.tipoCuenta.id")
     @Mapping(target = "numeroCuenta", source = "cuenta.numeroCuenta")
     @Mapping(target = "nombreBanco", source = "cuenta.nombreBanco")
