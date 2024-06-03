@@ -20,6 +20,5 @@ public interface ISocioResponseMapper {
     @Mapping(target = "nombre", source = "nombre")
     @Mapping(target = "cedula", source = "cedula")
     SocioResponse addRequestToUsuario(Socio socio);
-
     List<SocioResponse> addRequestToUsuarioList(List<Socio> socio);
 }
