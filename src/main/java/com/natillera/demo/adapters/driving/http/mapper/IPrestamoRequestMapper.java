@@ -2,8 +2,10 @@ package com.natillera.demo.adapters.driving.http.mapper;
 
 import com.natillera.demo.adapters.driving.http.dto.request.AddPrestamoRequest;
 import com.natillera.demo.domain.model.Prestamo;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+@Mapper(componentModel = "spring")
 public interface IPrestamoRequestMapper {
 
     @Mapping(source = "valorPrestamo", target = "valorPrestamo")

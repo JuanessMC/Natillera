@@ -4,6 +4,7 @@ import com.natillera.demo.domain.model.Prestamo;
 
 import java.util.List;
 
+
 public interface IPrestamoServicePort {
 
     List<Prestamo> getAllPrestamos();

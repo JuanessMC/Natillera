@@ -9,6 +9,7 @@ import com.natillera.demo.domain.api.IPrestamoServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,21 +60,21 @@ public class PrestamoRestControllerAdapter {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/socio/")
-    public ResponseEntity<StandardResponse<PrestamoResponse>> getPrestamoBySocio(@RequestParam long id) {
+    //metodo que actualiza el prestamo
+    @PostMapping("/")
+    public ResponseEntity<StandardResponse<PrestamoResponse>> updatePrestamo(@RequestParam long id) {
 
         PrestamoResponse prestamoResponse = prestamoResponseMapper
                 .addRequestToPrestamo(prestamoServicePort.getPrestamoById(id));
-
 
         StandardResponse<PrestamoResponse> response = new StandardResponse<>(
                 "",
                 200,
                 LocalDateTime.now().toString()
         );
-
         response.setData(prestamoResponse);
 
         return ResponseEntity.ok(response);
     }
+
 }
