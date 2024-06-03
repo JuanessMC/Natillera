@@ -23,7 +23,6 @@ public interface IUsuarioEntityMapper {
     @Mapping(source = "cuenta.tipoCuenta.id", target = "cuenta.tipoCuenta.id")
     @Mapping(source = "cedula", target = "cuenta.usuario.cedula")
     UsuarioEntity toEntity(Socio socio);
-
     @Mapping(target = "estado", source = "estado")
     @Mapping(target = "correoElectronico", source = "correoElectronico")
     @Mapping(target = "fechaNacimiento", source = "fechaNacimiento")
@@ -34,6 +33,7 @@ public interface IUsuarioEntityMapper {
     @Mapping(target = "cuenta.nombreBanco", source = "cuenta.nombreBanco")
     @Mapping(target = "cuenta.numeroCuenta", source = "cuenta.numeroCuenta")
     @Mapping(target = "cuenta.tipoCuenta.id", source = "cuenta.tipoCuenta.id")
+    @Mapping(target = "cuenta.tipoCuenta.nombre", source = "cuenta.tipoCuenta.nombre")
     Socio toModel(UsuarioEntity usuarioEntity);
     List<Socio> toModelList(List<UsuarioEntity> usuarioEntityList);
 }

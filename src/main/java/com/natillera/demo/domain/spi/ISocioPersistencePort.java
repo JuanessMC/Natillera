@@ -8,5 +8,6 @@ public interface ISocioPersistencePort {
     void saveSocio(Socio socio);
     Socio getSocio(long id);
     List<Socio> getAllSocio();
+    void updateSocio(Socio socio);
 
 }

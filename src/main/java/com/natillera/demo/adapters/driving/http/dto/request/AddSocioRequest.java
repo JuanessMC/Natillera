@@ -10,7 +10,6 @@ public record AddSocioRequest(
         LocalDate fechaNacimiento,
         String correoElectronico,
         boolean estado,
-        float salarioMensual,
         String nombreBanco,
         long numeroCuenta,
         long idTipoCuenta) {
