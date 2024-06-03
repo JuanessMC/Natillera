@@ -33,6 +33,6 @@ public class SocioEntity {
     private UsuarioEntity usuario;
 
     @OneToMany(mappedBy = "socio")
-    List<PrestamoEntity> prestamos;
+    private List<PrestamoEntity> prestamos;
 
 }

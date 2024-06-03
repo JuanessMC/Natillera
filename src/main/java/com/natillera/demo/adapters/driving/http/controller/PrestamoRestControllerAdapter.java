@@ -1,5 +1,6 @@
 package com.natillera.demo.adapters.driving.http.controller;
 
+import com.natillera.demo.adapters.driving.http.dto.request.AddPrestamoRequest;
 import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponse;
 import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseList;
 import com.natillera.demo.adapters.driving.http.dto.response.StandardResponse;
@@ -9,7 +10,8 @@ import com.natillera.demo.domain.api.IPrestamoServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +34,7 @@ public class PrestamoRestControllerAdapter {
                 .addRequestToPrestamo(prestamoServicePort.getPrestamoById(id));
 
         StandardResponse<PrestamoResponse> response = new StandardResponse<>(
-                "",
+                "Prestamo obtenido correctamente",
                 200,
                 LocalDateTime.now().toString()
         );
@@ -50,7 +52,7 @@ public class PrestamoRestControllerAdapter {
                 .addRequestToPrestamoList(prestamoServicePort.getAllPrestamos()));
 
         StandardResponse<PrestamoResponseList> response = new StandardResponse<>(
-                "",
+                "Prestamos optenidos correctamente",
                 200,
                 LocalDateTime.now().toString()
         );
@@ -61,20 +63,16 @@ public class PrestamoRestControllerAdapter {
     }
 
     //metodo que actualiza el prestamo
-    @PostMapping("/")
-    public ResponseEntity<StandardResponse<PrestamoResponse>> updatePrestamo(@RequestParam long id) {
+    @PutMapping("/update")
+    public ResponseEntity<StandardResponse<PrestamoResponse>> updatePrestamo(
+            @RequestBody AddPrestamoRequest addPrestamoRequest) {
 
-        PrestamoResponse prestamoResponse = prestamoResponseMapper
-                .addRequestToPrestamo(prestamoServicePort.getPrestamoById(id));
-
-        StandardResponse<PrestamoResponse> response = new StandardResponse<>(
-                "",
+        prestamoServicePort.updatePrestamo(prestamoRequestMapper.addRequestToPrestamo(addPrestamoRequest));
+        return ResponseEntity.ok(new StandardResponse<>(
+                "El prestamo fue actualizado satisfactoriamente",
                 200,
-                LocalDateTime.now().toString()
+                LocalDateTime.now().toString())
         );
-        response.setData(prestamoResponse);
-
-        return ResponseEntity.ok(response);
     }
 
 }
