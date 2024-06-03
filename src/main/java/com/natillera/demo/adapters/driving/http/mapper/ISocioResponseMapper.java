@@ -4,6 +4,9 @@ import com.natillera.demo.adapters.driving.http.dto.response.SocioResponse;
 import com.natillera.demo.domain.model.Socio;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ISocioResponseMapper {
     @Mapping(target = "idTipoCuenta", source = "cuenta.tipoCuenta.id")
@@ -17,4 +20,6 @@ public interface ISocioResponseMapper {
     @Mapping(target = "nombre", source = "nombre")
     @Mapping(target = "cedula", source = "cedula")
     SocioResponse addRequestToUsuario(Socio socio);
+
+    List<SocioResponse> addRequestToUsuarioList(List<Socio> socio);
 }

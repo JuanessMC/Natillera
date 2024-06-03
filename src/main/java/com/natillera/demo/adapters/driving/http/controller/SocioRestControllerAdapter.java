@@ -2,11 +2,11 @@ package com.natillera.demo.adapters.driving.http.controller;
 
 import com.natillera.demo.adapters.driving.http.dto.request.AddSocioRequest;
 import com.natillera.demo.adapters.driving.http.dto.response.SocioResponse;
+import com.natillera.demo.adapters.driving.http.dto.response.SocioResponseList;
 import com.natillera.demo.adapters.driving.http.dto.response.StandardResponse;
 import com.natillera.demo.adapters.driving.http.mapper.ISocioRequestMapper;
 import com.natillera.demo.adapters.driving.http.mapper.ISocioResponseMapper;
 import com.natillera.demo.domain.api.ISocioServicePort;
-import com.natillera.demo.domain.model.Socio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +27,44 @@ public class SocioRestControllerAdapter {
     private final ISocioRequestMapper socioRequestMapper;
     private final ISocioResponseMapper socioResponseMapper;
     @PostMapping("/")
-    public ResponseEntity<String> addSocio(@RequestBody AddSocioRequest addSocioRequest)
+    public ResponseEntity<StandardResponse<SocioResponse>> addSocio(@RequestBody AddSocioRequest addSocioRequest)
     {
         socioServicePort.addSocio(socioRequestMapper.addRequestToUsuario(addSocioRequest));
-        return ResponseEntity.ok("The socio has been successfully recorded");
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new StandardResponse<>(
+                        "The socio has been successfully recorded",
+                        201,
+                        LocalDateTime.now().toString())
+                );
     }
 
     @GetMapping("/")
-    public ResponseEntity<SocioResponse> getSocio(@RequestParam long id)
+    public ResponseEntity<StandardResponse<SocioResponse>> getSocio(@RequestParam long id)
     {
-        return ResponseEntity.ok(socioResponseMapper.addRequestToUsuario(socioServicePort.getSocio(id)));
+        SocioResponse socioResponse = socioResponseMapper.addRequestToUsuario(socioServicePort.getSocio(id));
+        StandardResponse<SocioResponse> response = new StandardResponse<>(
+                "",
+                200,
+                LocalDateTime.now().toString()
+        );
+        response.setData(socioResponse);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all/")
+    public ResponseEntity<StandardResponse<SocioResponseList>> getAllSocio()
+    {
+        SocioResponseList socioResponseList = new SocioResponseList();
+        socioResponseList.setResponseList(socioResponseMapper.addRequestToUsuarioList(socioServicePort.getAllSocio()));
+
+        StandardResponse<SocioResponseList> response = new StandardResponse<>(
+                "",
+                200,
+                LocalDateTime.now().toString()
+        );
+        response.setData(socioResponseList);
+
+        return ResponseEntity.ok(response);
     }
 }
-//The request handler function in a Controller should set the appropriate HTTP status code based on the operation’s success or failure. This is done by returning a Response object with the appropriate status code.
-//If an exception is thrown during the execution of the handler, the status code should be in the range of 4xx or 5xx. Examples of such codes are BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, BAD_GATEWAY, SERVICE_UNAVAILABLE, etc.
-//The status code should be 1xx, 2xx, or 3xx if no exception is thrown and the operation is considered successful. Such codes include OK, CREATED, MOVED_PERMANENTLY, FOUND, etc.

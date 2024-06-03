@@ -4,6 +4,9 @@ import com.natillera.demo.adapters.driven.jpa.mysql.entity.UsuarioEntity;
 import com.natillera.demo.domain.model.Socio;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface IUsuarioEntityMapper {
 
@@ -32,4 +35,5 @@ public interface IUsuarioEntityMapper {
     @Mapping(target = "cuenta.numeroCuenta", source = "cuenta.numeroCuenta")
     @Mapping(target = "cuenta.tipoCuenta.id", source = "cuenta.tipoCuenta.id")
     Socio toModel(UsuarioEntity usuarioEntity);
+    List<Socio> toModelList(List<UsuarioEntity> usuarioEntityList);
 }
