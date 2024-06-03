@@ -8,6 +8,8 @@ import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class SocioAdapter implements ISocioPersistencePort {
 
@@ -31,6 +33,16 @@ public class SocioAdapter implements ISocioPersistencePort {
         try {
             UsuarioEntity usuarioEntity = usuarioRepository.findByCedula(id);
             return usuarioEntityMapper.toModel(usuarioEntity);
+        }catch (Exception e)
+        {
+            throw new NegativeNotAllowedException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Socio> getAllSocio() {
+        try {
+            return usuarioEntityMapper.toModelList(usuarioRepository.findAll());
         }catch (Exception e)
         {
             throw new NegativeNotAllowedException(e.getMessage());

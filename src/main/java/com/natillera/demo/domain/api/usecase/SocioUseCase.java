@@ -3,6 +3,9 @@ package com.natillera.demo.domain.api.usecase;
 import com.natillera.demo.domain.api.ISocioServicePort;
 import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
+
+import java.util.List;
+
 public class SocioUseCase implements ISocioServicePort {
 
     private final ISocioPersistencePort socioPersistencePort;
@@ -19,5 +22,10 @@ public class SocioUseCase implements ISocioServicePort {
     @Override
     public Socio getSocio(long id) {
         return socioPersistencePort.getSocio(id);
+    }
+
+    @Override
+    public List<Socio> getAllSocio() {
+        return socioPersistencePort.getAllSocio();
     }
 }

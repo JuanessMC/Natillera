@@ -11,7 +11,7 @@ public class SocioResponse {
     private final long cedula;
     private final String nombre;
     private final String apellidos;
-    private final LocalDate fechaNacimiento;
+    private final String fechaNacimiento;
     private final String correoElectronico;
     private final boolean estado;
     private final float salarioMensual;
