@@ -43,7 +43,7 @@ public class PrestamoRestControllerAdapter {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/all/")
+    @GetMapping("/all")
     public ResponseEntity<StandardResponse<PrestamoResponseList>> getAllPrestamo() {
 
         PrestamoResponseList prestamoResponseList = new PrestamoResponseList();

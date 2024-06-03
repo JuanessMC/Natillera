@@ -9,9 +9,9 @@ public class Prestamo {
     private final int plazoPago;
     private final Date fecha;
     private final String estadoPago;
-    private final String cedula;
+    private final long cedula;
 
-    public Prestamo(Long idPrestamo, Long valorPrestamo, float tasaInteres, int plazoPago, Date fecha, String estadoPago, String cedula) {
+    public Prestamo(Long idPrestamo, Long valorPrestamo, float tasaInteres, int plazoPago, Date fecha, String estadoPago, long cedula) {
         this.idPrestamo = idPrestamo;
         this.valorPrestamo = valorPrestamo;
         this.tasaInteres = tasaInteres;
@@ -45,7 +45,7 @@ public class Prestamo {
         return estadoPago;
     }
 
-    public String getCedula() {
+    public long getCedula() {
         return cedula;
     }
 }

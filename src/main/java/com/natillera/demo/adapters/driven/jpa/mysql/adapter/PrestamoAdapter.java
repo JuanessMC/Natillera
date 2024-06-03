@@ -38,8 +38,8 @@ public class PrestamoAdapter implements IPrestamoPersistencePort {
     @Override
     public void updatePrestamo(Prestamo prestamo) {
         try {
-            PrestamoEntity prestamoEntity = prestamoEntityMapper.toEntity(prestamo);
-            prestamoRepository.save(prestamoEntity);
+            PrestamoEntity prestamoEntity = prestamoRepository.findBySocioCedula(prestamo.getCedula());
+            prestamoRepository.updateByCedula(prestamoEntity, prestamoEntity.getSocio().getCedula());
         } catch (Exception e) {
             throw new NegativeNotAllowedException(e.getMessage());
         }
