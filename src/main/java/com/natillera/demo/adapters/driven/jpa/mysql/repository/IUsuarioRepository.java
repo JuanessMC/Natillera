@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
@@ -29,5 +31,27 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
 
     Optional<UsuarioEntity> findByCedula(Long cedula);
+
+    @Query(value = "SELECT name, value, total FROM (" +
+            "    SELECT 'Intereses' AS name, SUM(p.tasa_interes) AS value, " +
+            "           (SELECT SUM(tasa_interes) FROM prestamo) + " +
+            "           (SELECT SUM(valor_multa) FROM multa) + " +
+            "           (SELECT SUM(valor_aporte) FROM aporte) AS total " +
+            "    FROM prestamo p " +
+            "    UNION ALL " +
+            "    SELECT 'Multas' AS name, SUM(m.valor_multa) AS value, " +
+            "           (SELECT SUM(tasa_interes) FROM prestamo) + " +
+            "           (SELECT SUM(valor_multa) FROM multa) + " +
+            "           (SELECT SUM(valor_aporte) FROM aporte) AS total " +
+            "    FROM multa m " +
+            "    UNION ALL " +
+            "    SELECT 'Aportes' AS name, SUM(a.valor_aporte) AS value, " +
+            "           (SELECT SUM(tasa_interes) FROM prestamo) + " +
+            "           (SELECT SUM(valor_multa) FROM multa) + " +
+            "           (SELECT SUM(valor_aporte) FROM aporte) AS total " +
+            "    FROM aporte a" +
+            ") AS subquery",
+            nativeQuery = true)
+    List<Map<String, Object>> getPagosResumen();
 
 }

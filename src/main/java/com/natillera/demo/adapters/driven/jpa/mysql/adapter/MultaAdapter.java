@@ -22,7 +22,6 @@ public class MultaAdapter implements IMultaPersistencePort {
     @Override
     public String saveMulta(Multa multa) {
         try {
-
             Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(multa.getCedula());
             if (optionalUsuarioEntity.isPresent()) {
                 multaRepository.save(multaEntityMapper.toEntity(multa));

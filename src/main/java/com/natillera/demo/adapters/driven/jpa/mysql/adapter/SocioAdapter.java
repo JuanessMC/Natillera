@@ -5,13 +5,11 @@ import com.natillera.demo.adapters.driven.jpa.mysql.entity.UsuarioEntity;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IUsuarioEntityMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.ICuentaRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
-import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseList;
 import com.natillera.demo.domain.exception.NegativeNotAllowedException;
 import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,5 +80,7 @@ public class SocioAdapter implements ISocioPersistencePort {
             throw new NegativeNotAllowedException("Error al actualizar el estado del usuario: " + e.getMessage());
         }
     }
+
+
 
 }

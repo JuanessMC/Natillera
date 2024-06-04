@@ -11,7 +11,6 @@ import com.natillera.demo.domain.api.IPrestamoServicePort;
 import com.natillera.demo.domain.model.Prestamo;
 import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
-import com.natillera.demo.adapters.driving.http.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
