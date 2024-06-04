@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "socio")
@@ -31,6 +32,9 @@ public class SocioEntity {
     @OneToOne
     @JoinColumn(name = "cedula")
     private UsuarioEntity usuario;
+
+    @OneToMany(mappedBy = "socio")
+    private Set<MultaEntity> multas;
 
     @OneToMany(mappedBy = "socio")
     private List<PrestamoEntity> prestamos;

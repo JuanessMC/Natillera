@@ -1,11 +1,15 @@
 package com.natillera.demo.configuration;
 
 import com.natillera.demo.adapters.driven.jpa.mysql.adapter.PrestamoAdapter;
+import com.natillera.demo.adapters.driven.jpa.mysql.adapter.MultaAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.adapter.SocioAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IPrestamoMapper;
+import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IMultaEntityMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IUsuarioEntityMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.ICuentaRepository;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.ISocioRepository;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.IMultaRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.ISocioRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
 import com.natillera.demo.adapters.driving.http.Utilities;
@@ -13,10 +17,13 @@ import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseLis
 import com.natillera.demo.adapters.driving.http.mapper.IPrestamoResponseMapper;
 import com.natillera.demo.adapters.driving.http.mapper.IUtilities;
 import com.natillera.demo.domain.api.IPrestamoServicePort;
+import com.natillera.demo.domain.api.IMultaServicePort;
 import com.natillera.demo.domain.api.ISocioServicePort;
 import com.natillera.demo.domain.api.usecase.PrestamoUseCase;
+import com.natillera.demo.domain.api.usecase.MultaUseCase;
 import com.natillera.demo.domain.api.usecase.SocioUseCase;
 import com.natillera.demo.domain.spi.IPrestamoPersistencePort;
+import com.natillera.demo.domain.spi.IMultaPersistencePort;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +43,11 @@ public class BeanConfiguration {
     private final IPrestamoRepository prestamoRepository;
     private final IPrestamoMapper prestamoEntityMapper;
     private final IPrestamoResponseMapper prestamoResponseMapper;
+
+    private final IMultaRepository multaRepository;
+    private final IMultaEntityMapper multaEntityMapper;
+    private final ISocioRepository socioRepository;
+
 
     @Bean
     public ISocioPersistencePort socioPersistencePort() {
@@ -62,6 +74,17 @@ public class BeanConfiguration {
         return new PrestamoUseCase(prestamoPersistencePort());
     }
 
+    @Bean
+    public IMultaPersistencePort multaPersistencePort()
+    {
+        return new MultaAdapter( multaRepository, socioRepository, multaEntityMapper);
+    }
+
+    @Bean
+    public IMultaServicePort multaServicePort()
+    {
+        return new MultaUseCase(multaPersistencePort());
+    }
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

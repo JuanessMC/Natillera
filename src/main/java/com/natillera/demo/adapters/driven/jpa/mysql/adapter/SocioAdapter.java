@@ -69,7 +69,7 @@ public class SocioAdapter implements ISocioPersistencePort {
             throw new NegativeNotAllowedException(e.getMessage());
         }
     }
-
+@Override
     public void updateSocioByEstado(Socio socio) {
         try {
             Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(socio.getCedula());
