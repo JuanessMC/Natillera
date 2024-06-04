@@ -10,9 +10,17 @@ import javax.transaction.Transactional;
 
 public interface IPrestamoRepository extends JpaRepository<PrestamoEntity, Long> {
 
-    PrestamoEntity findBySocioCedula(long cedula);
+    PrestamoEntity findByIdPrestamo(long cedula);
+
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE PrestamoEntity p SET p = :prestamoEntity WHERE p.idPrestamo = :idPrestamo")
+//    void updateById(@Param("prestamoEntity") PrestamoEntity prestamoEntity, @Param("idPrestamo") long idPrestamo);
+//
+//}
+
     @Modifying
     @Transactional
-    @Query("UPDATE PrestamoEntity p SET p = :PrestamoEntity WHERE p.socio.cedula = :cedula")
-    void updateByCedula(@Param("prestamoEntity") PrestamoEntity prestamoEntity, @Param("cedula") long cedula);
+    @Query("UPDATE PrestamoEntity p SET p.estadoPago = :#{#prestamoEntity.estadoPago}, p.fecha = :#{#prestamoEntity.fecha}, p.plazoPago = :#{#prestamoEntity.plazoPago}, p.socio.cedula = :#{#prestamoEntity.socio.cedula}, p.tasaInteres = :#{#prestamoEntity.tasaInteres}, p.valorPrestamo = :#{#prestamoEntity.valorPrestamo} WHERE p.idPrestamo = :idPrestamo")
+    void updateById(@Param("prestamoEntity") PrestamoEntity prestamoEntity, @Param("idPrestamo") long idPrestamo);
 }

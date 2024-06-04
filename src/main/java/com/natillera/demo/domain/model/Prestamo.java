@@ -1,21 +1,23 @@
 package com.natillera.demo.domain.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Prestamo {
     private final Long idPrestamo;
+    private final long cedula;
     private final Long valorPrestamo;
     private final float tasaInteres;
     private final int plazoPago;
-    private final Date fecha;
+    private final Long valorMensual;
+    private final LocalDate fecha;
     private final String estadoPago;
-    private final long cedula;
 
-    public Prestamo(Long idPrestamo, Long valorPrestamo, float tasaInteres, int plazoPago, Date fecha, String estadoPago, long cedula) {
+    public Prestamo(Long idPrestamo, Long valorPrestamo, float tasaInteres, int plazoPago, Long valorMensual, LocalDate fecha, String estadoPago, long cedula) {
         this.idPrestamo = idPrestamo;
         this.valorPrestamo = valorPrestamo;
         this.tasaInteres = tasaInteres;
         this.plazoPago = plazoPago;
+        this.valorMensual= valorMensual;
         this.fecha = fecha;
         this.estadoPago = estadoPago;
         this.cedula = cedula;
@@ -37,7 +39,11 @@ public class Prestamo {
         return plazoPago;
     }
 
-    public Date getFecha() {
+    public Long getValorMensual() {
+        return valorMensual;
+    }
+
+    public LocalDate getFecha() {
         return fecha;
     }
 

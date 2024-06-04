@@ -62,10 +62,8 @@ public class PrestamoRestControllerAdapter {
         return ResponseEntity.ok(response);
     }
 
-    //metodo que actualiza el prestamo
     @PutMapping("/update")
-    public ResponseEntity<StandardResponse<PrestamoResponse>> updatePrestamo(
-            @RequestBody AddPrestamoRequest addPrestamoRequest) {
+    public ResponseEntity<StandardResponse<PrestamoResponse>> updatePrestamo(@RequestBody AddPrestamoRequest addPrestamoRequest) {
 
         prestamoServicePort.updatePrestamo(prestamoRequestMapper.addRequestToPrestamo(addPrestamoRequest));
         return ResponseEntity.ok(new StandardResponse<>(
