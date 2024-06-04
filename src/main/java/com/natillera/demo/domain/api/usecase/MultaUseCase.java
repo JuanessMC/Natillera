@@ -13,7 +13,7 @@ public class MultaUseCase implements IMultaServicePort {
     }
 
     @Override
-    public String addOrUpdateMulta(Multa multa) {
-        return multaPersistencePort.addOrUpdateMulta(multa);
+    public String saveMulta(Multa multa) {
+        return multaPersistencePort.saveMulta(multa);
     }
 }

@@ -62,7 +62,7 @@ public class BeanConfiguration {
     @Bean
     public IMultaPersistencePort multaPersistencePort()
     {
-        return new MultaAdapter( multaRepository, socioRepository, multaEntityMapper);
+        return new MultaAdapter( multaRepository, multaEntityMapper, usuarioRepository);
     }
     @Bean
     public IEstadisticaPersistencePort estadisticaPersistencePort() {

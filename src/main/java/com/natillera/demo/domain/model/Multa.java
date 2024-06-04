@@ -8,16 +8,16 @@ public class Multa {
 
   private final String nombre;
 
-  private final Float valorMulta;
+  private final float valorMulta;
   private final String descripcion;
 
   private final LocalDate fecha;
 
   private final boolean estado;
 
-  private final long cedula;
+  private final Long cedula;
 
-    public Multa(Integer idMulta, String nombre, Float valorMulta, String descripcion, LocalDate fecha, boolean estado, long cedula) {
+    public Multa(Integer idMulta, String nombre, float valorMulta, String descripcion, LocalDate fecha, boolean estado, Long cedula) {
         this.idMulta = idMulta;
         this.nombre = nombre;
         this.valorMulta = valorMulta;
@@ -35,7 +35,7 @@ public class Multa {
         return nombre;
     }
 
-    public Float getValorMulta() {
+    public float getValorMulta() {
         return valorMulta;
     }
 
@@ -51,7 +51,7 @@ public class Multa {
         return estado;
     }
 
-    public long getCedula() {
+    public Long getCedula() {
         return cedula;
     }
 }

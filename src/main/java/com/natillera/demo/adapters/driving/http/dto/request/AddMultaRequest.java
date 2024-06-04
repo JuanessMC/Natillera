@@ -5,9 +5,8 @@ import java.time.LocalDate;
 public record AddMultaRequest(
         Integer idMulta,
         String nombre,
-        Float valorMulta,
+        float valorMulta,
         String descripcion,
-
         LocalDate fecha,
         boolean estado,
         long cedula
