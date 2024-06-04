@@ -17,13 +17,13 @@ public class Multa {
 
   private final long cedula;
 
-    public Multa(Integer idMulta, String nombre, Float valor, String descripcion, LocalDate fecha, boolean estadoPago, long cedula) {
+    public Multa(Integer idMulta, String nombre, Float valorMulta, String descripcion, LocalDate fecha, boolean estado, long cedula) {
         this.idMulta = idMulta;
         this.nombre = nombre;
-        this.valorMulta = valor;
+        this.valorMulta = valorMulta;
         this.descripcion = descripcion;
         this.fecha = fecha;
-        this.estado = estadoPago;
+        this.estado = estado;
         this.cedula = cedula;
     }
 
