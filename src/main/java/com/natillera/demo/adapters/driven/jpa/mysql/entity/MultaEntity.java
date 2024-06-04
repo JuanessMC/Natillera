@@ -1,5 +1,5 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.entity;
-import com.natillera.demo.domain.model.Socio;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,10 +33,10 @@ public class MultaEntity {
     private String nombre;
 
     @Column(name = "descripcion")
-    private long descripcion;
+    private String descripcion;
 
     @Column(name = "valor_multa")
-    private Float valorMulta;
+    private float valorMulta;
 
     @Column(name = "fecha")
     private LocalDate fecha;

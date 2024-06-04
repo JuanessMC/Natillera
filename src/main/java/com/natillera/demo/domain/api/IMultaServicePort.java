@@ -4,6 +4,6 @@ import com.natillera.demo.domain.model.Multa;
 
 public interface IMultaServicePort {
 
-    String addOrUpdateMulta(Multa multa);
+    String saveMulta(Multa multa);
 
 }

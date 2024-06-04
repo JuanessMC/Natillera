@@ -23,7 +23,7 @@ public class MultaRestControllerAdapter {
 
     @PostMapping("/")
     public ResponseEntity<StandardResponse<MultaResponse>> addOrUpdateMulta(@RequestBody AddMultaRequest addMultaRequest) {
-        String response = multaServicePort.addOrUpdateMulta(multaRequestMapper.addRequestToMulta(addMultaRequest));
+        String response = multaServicePort.saveMulta(multaRequestMapper.addRequestToMulta(addMultaRequest));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new StandardResponse<>(
                         response,
