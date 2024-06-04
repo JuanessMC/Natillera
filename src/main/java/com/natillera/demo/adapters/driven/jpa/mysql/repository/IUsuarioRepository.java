@@ -23,8 +23,10 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
     void updateSocioByUsuarioCedula(@Param("usuario") UsuarioEntity usuario, @Param("cedula") Long cedula);
 
     @Modifying
+    @Transactional
     @Query("UPDATE UsuarioEntity u SET u.estado = :estado WHERE u.cedula = :cedula")
     void updateEstadoByCedula(@Param("estado") boolean estado, @Param("cedula") Long cedula);
+
 
     Optional<UsuarioEntity> findByCedula(Long cedula);
 
