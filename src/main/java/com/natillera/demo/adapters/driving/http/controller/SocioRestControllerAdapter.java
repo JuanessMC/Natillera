@@ -32,12 +32,12 @@ public class SocioRestControllerAdapter {
     private final ISocioResponseMapper socioResponseMapper;
 
     @PostMapping("/")
-    public ResponseEntity<StandardResponse<SocioResponse>> addSocio(@RequestBody AddSocioRequest addSocioRequest) {
-        socioServicePort.addSocio(socioRequestMapper.addRequestToUsuario(addSocioRequest));
+    public ResponseEntity<StandardResponse<SocioResponse>> addOrUpdateSocio(@RequestBody AddSocioRequest addSocioRequest) {
+        String response = socioServicePort.addOrUpdateSocio(socioRequestMapper.addRequestToUsuario(addSocioRequest));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new StandardResponse<>(
-                        "El socio fue creado satisfactoriamente",
-                        201,
+                        response,
+                        200,
                         LocalDateTime.now().toString())
                 );
     }
@@ -71,7 +71,7 @@ public class SocioRestControllerAdapter {
     }
     @PutMapping("/update")
     public ResponseEntity<StandardResponse<SocioResponse>> updateSocio(@RequestBody AddSocioRequest addSocioRequest) {
-        socioServicePort.updateSocio(socioRequestMapper.addRequestToUsuario(addSocioRequest));
+        socioServicePort.updateSocioByEstado(socioRequestMapper.addRequestToUsuario(addSocioRequest));
         return ResponseEntity.ok(new StandardResponse<>(
                         "El socio fue actualizado satisfactoriamente",
                         200,
