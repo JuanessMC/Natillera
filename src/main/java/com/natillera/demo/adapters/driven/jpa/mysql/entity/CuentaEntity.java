@@ -1,6 +1,7 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CuentaEntity {
 
     @Id

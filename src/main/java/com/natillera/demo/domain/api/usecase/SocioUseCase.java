@@ -15,8 +15,8 @@ public class SocioUseCase implements ISocioServicePort {
     }
 
     @Override
-    public void addSocio(Socio socio) {
-        socioPersistencePort.saveSocio(socio);
+    public String addOrUpdateSocio(Socio socio) {
+        return socioPersistencePort.addOrUpdateSocio(socio);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SocioUseCase implements ISocioServicePort {
     }
 
     @Override
-    public void updateSocio(Socio socio) {
-        socioPersistencePort.updateSocio(socio);
+    public void updateSocioByEstado(Socio socio) {
+        socioPersistencePort.updateSocioByEstado(socio);
     }
 }
