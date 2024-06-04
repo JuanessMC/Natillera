@@ -30,7 +30,7 @@ public class MultaAdapter implements IMultaPersistencePort {
 
             SocioEntity socioEntity = optionalSocioEntity.get();
             MultaEntity multaEntity = multaEntityMapper.toEntity(multa);
-            multaEntity.setSocio(socioEntity);  // Asigna el socioEntity al multaEntity
+            multaEntity.setSocio(socioEntity);
             Optional<MultaEntity> optionalMultaEntity = multaRepository.findById(multa.getIdMulta());
 
             if (optionalMultaEntity.isPresent()) {

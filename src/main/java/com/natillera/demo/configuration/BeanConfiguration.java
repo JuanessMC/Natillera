@@ -1,5 +1,6 @@
 package com.natillera.demo.configuration;
 
+import com.natillera.demo.adapters.driven.jpa.mysql.adapter.EstadisticaAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.adapter.PrestamoAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.adapter.MultaAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.adapter.SocioAdapter;
@@ -10,18 +11,19 @@ import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoReposito
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.ICuentaRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.ISocioRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IMultaRepository;
-import com.natillera.demo.adapters.driven.jpa.mysql.repository.ISocioRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
 import com.natillera.demo.adapters.driving.http.Utilities;
-import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseList;
 import com.natillera.demo.adapters.driving.http.mapper.IPrestamoResponseMapper;
 import com.natillera.demo.adapters.driving.http.mapper.IUtilities;
+import com.natillera.demo.domain.api.IEstadisticaServicePort;
 import com.natillera.demo.domain.api.IPrestamoServicePort;
 import com.natillera.demo.domain.api.IMultaServicePort;
 import com.natillera.demo.domain.api.ISocioServicePort;
+import com.natillera.demo.domain.api.usecase.EstadisticaUseCase;
 import com.natillera.demo.domain.api.usecase.PrestamoUseCase;
 import com.natillera.demo.domain.api.usecase.MultaUseCase;
 import com.natillera.demo.domain.api.usecase.SocioUseCase;
+import com.natillera.demo.domain.spi.IEstadisticaPersistencePort;
 import com.natillera.demo.domain.spi.IPrestamoPersistencePort;
 import com.natillera.demo.domain.spi.IMultaPersistencePort;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
@@ -40,6 +42,7 @@ public class BeanConfiguration {
     private final IUsuarioRepository usuarioRepository;
     private final IUsuarioEntityMapper usuarioEntityMapper;
     private final ICuentaRepository cuentaRepository;
+
     private final IPrestamoRepository prestamoRepository;
     private final IPrestamoMapper prestamoEntityMapper;
     private final IPrestamoResponseMapper prestamoResponseMapper;
@@ -48,42 +51,43 @@ public class BeanConfiguration {
     private final IMultaEntityMapper multaEntityMapper;
     private final ISocioRepository socioRepository;
 
-
     @Bean
     public ISocioPersistencePort socioPersistencePort() {
         return new SocioAdapter(usuarioRepository, usuarioEntityMapper, cuentaRepository);
     }
-
     @Bean
     public IPrestamoPersistencePort prestamoPersistencePort() {
         return new PrestamoAdapter(prestamoRepository, prestamoEntityMapper);
     }
-
-    @Bean
-    public IUtilities utilitiesConfig() {
-        return new Utilities(socioPersistencePort(), prestamoResponseMapper);
-    }
-
-    @Bean
-    public ISocioServicePort socioServicePort() {
-        return new SocioUseCase(socioPersistencePort());
-    }
-
-    @Bean
-    public IPrestamoServicePort prestamoServicePort() {
-        return new PrestamoUseCase(prestamoPersistencePort());
-    }
-
     @Bean
     public IMultaPersistencePort multaPersistencePort()
     {
         return new MultaAdapter( multaRepository, socioRepository, multaEntityMapper);
     }
-
+    @Bean
+    public IEstadisticaPersistencePort estadisticaPersistencePort() {
+        return new EstadisticaAdapter(usuarioRepository);
+    }
+    @Bean
+    public IUtilities utilitiesConfig() {
+        return new Utilities(socioPersistencePort(), prestamoResponseMapper);
+    }
+    @Bean
+    public ISocioServicePort socioServicePort() {
+        return new SocioUseCase(socioPersistencePort());
+    }
+    @Bean
+    public IPrestamoServicePort prestamoServicePort() {
+        return new PrestamoUseCase(prestamoPersistencePort());
+    }
     @Bean
     public IMultaServicePort multaServicePort()
     {
         return new MultaUseCase(multaPersistencePort());
+    }
+    @Bean
+    public IEstadisticaServicePort estadisticaServicePort() {
+        return new EstadisticaUseCase(estadisticaPersistencePort());
     }
     @Bean
     public WebMvcConfigurer corsConfigurer() {

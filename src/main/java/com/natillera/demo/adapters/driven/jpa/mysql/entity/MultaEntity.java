@@ -1,5 +1,4 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.entity;
-import com.natillera.demo.domain.model.Socio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
