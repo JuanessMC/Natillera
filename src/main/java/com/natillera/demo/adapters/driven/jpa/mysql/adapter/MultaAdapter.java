@@ -25,13 +25,13 @@ public class MultaAdapter implements IMultaPersistencePort {
             Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(multa.getCedula());
             if (optionalUsuarioEntity.isPresent()) {
                 multaRepository.save(multaEntityMapper.toEntity(multa));
-                return "Multa agregada exitosamente";
+                return "Multa pagada exitosamente";
             } else {
 
-                throw new RuntimeException("No se encontro ningún usuario con la cedula proporcionada.");
+                throw new RuntimeException("No se encontró ningún socio con la cédula proporcionada.");
             }
         } catch (Exception e) {
-            return "Error al guardar la multa: " + e.getMessage();
+            return "Error al pagar la multa." + e.getMessage();
         }
     }
 }
