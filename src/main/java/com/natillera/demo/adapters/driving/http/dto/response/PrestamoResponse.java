@@ -2,17 +2,23 @@ package com.natillera.demo.adapters.driving.http.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @AllArgsConstructor
+@Getter
+@Setter
 public class PrestamoResponse {
-    private final Long idPrestamo;
-    private final Long valorPrestamo;
-    private final float tasaInteres;
-    private final int plazoPago;
-    private final String fecha;
-    private final String estadoPago;
-    private final String cedula;
+    private Long idPrestamo;
+    private Long valorPrestamo;
+    private float tasaInteres;
+    private int plazoPago;
+    private Long valorMensual;
+    private String fecha;
+    private String estadoPago;
+    private String cedula;
+    private String observaciones;
+    private String nombre;
+    private String apellido;
 }

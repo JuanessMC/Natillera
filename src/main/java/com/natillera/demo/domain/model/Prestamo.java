@@ -11,8 +11,10 @@ public class Prestamo {
     private final Long valorMensual;
     private final LocalDate fecha;
     private final String estadoPago;
+    private final String observaciones;
 
-    public Prestamo(Long idPrestamo, Long valorPrestamo, float tasaInteres, int plazoPago, Long valorMensual, LocalDate fecha, String estadoPago, long cedula) {
+    public Prestamo(Long idPrestamo, Long valorPrestamo, float tasaInteres, int plazoPago,
+                    Long valorMensual, LocalDate fecha, String estadoPago, long cedula, String observaciones) {
         this.idPrestamo = idPrestamo;
         this.valorPrestamo = valorPrestamo;
         this.tasaInteres = tasaInteres;
@@ -21,6 +23,7 @@ public class Prestamo {
         this.fecha = fecha;
         this.estadoPago = estadoPago;
         this.cedula = cedula;
+        this.observaciones = observaciones;
     }
 
     public Long getIdPrestamo() {
@@ -53,5 +56,9 @@ public class Prestamo {
 
     public long getCedula() {
         return cedula;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
     }
 }

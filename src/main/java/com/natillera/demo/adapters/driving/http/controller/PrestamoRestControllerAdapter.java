@@ -6,7 +6,12 @@ import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseLis
 import com.natillera.demo.adapters.driving.http.dto.response.StandardResponse;
 import com.natillera.demo.adapters.driving.http.mapper.IPrestamoRequestMapper;
 import com.natillera.demo.adapters.driving.http.mapper.IPrestamoResponseMapper;
+import com.natillera.demo.adapters.driving.http.mapper.IUtilities;
 import com.natillera.demo.domain.api.IPrestamoServicePort;
+import com.natillera.demo.domain.model.Prestamo;
+import com.natillera.demo.domain.model.Socio;
+import com.natillera.demo.domain.spi.ISocioPersistencePort;
+import com.natillera.demo.adapters.driving.http.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +31,21 @@ public class PrestamoRestControllerAdapter {
     private final IPrestamoServicePort prestamoServicePort;
     private final IPrestamoRequestMapper prestamoRequestMapper;
     private final IPrestamoResponseMapper prestamoResponseMapper;
+    private final ISocioPersistencePort socioPersistencePort;
+    private final IUtilities utilities;
 
 
     @GetMapping("/")
     public ResponseEntity<StandardResponse<PrestamoResponse>> getPrestamo(@RequestParam long id) {
+        Prestamo prestamo = prestamoServicePort.getPrestamoById(id);
+
+        final Socio socio = socioPersistencePort.getSocio(prestamo.getCedula());
+
         PrestamoResponse prestamoResponse = prestamoResponseMapper
-                .addRequestToPrestamo(prestamoServicePort.getPrestamoById(id));
+                .addRequestToPrestamo(prestamo);
+
+        prestamoResponse.setNombre(socio.getNombre());
+        prestamoResponse.setApellido(socio.getApellidos());
 
         StandardResponse<PrestamoResponse> response = new StandardResponse<>(
                 "Prestamo obtenido correctamente",
@@ -51,8 +65,10 @@ public class PrestamoRestControllerAdapter {
         prestamoResponseList.setResponseList(prestamoResponseMapper
                 .addRequestToPrestamoList(prestamoServicePort.getAllPrestamos()));
 
+        prestamoResponseList = utilities.addNameToPrestamoResponseList(prestamoResponseList);
+
         StandardResponse<PrestamoResponseList> response = new StandardResponse<>(
-                "Prestamos optenidos correctamente",
+                "Prestamos obtenidos correctamente",
                 200,
                 LocalDateTime.now().toString()
         );

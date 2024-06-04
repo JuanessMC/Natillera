@@ -1,41 +1,63 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.adapter;
 
+import com.natillera.demo.adapters.driven.jpa.mysql.entity.CuentaEntity;
 import com.natillera.demo.adapters.driven.jpa.mysql.entity.UsuarioEntity;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IUsuarioEntityMapper;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.ICuentaRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
+import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseList;
 import com.natillera.demo.domain.exception.NegativeNotAllowedException;
 import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class SocioAdapter implements ISocioPersistencePort {
 
     private final IUsuarioRepository usuarioRepository;
     private final IUsuarioEntityMapper usuarioEntityMapper;
-
+    private final ICuentaRepository cuentaRepository;
     @Override
-    public void saveSocio(Socio socio) {
-
+    public String addOrUpdateSocio(Socio socio) {
         try {
-            UsuarioEntity usuarioEntity = usuarioEntityMapper.toEntity(socio);
-            usuarioRepository.save(usuarioEntity);
-        }catch (Exception e)
-        {
-            throw new NegativeNotAllowedException("Error al crear el usuario");
+            UsuarioEntity usuario = usuarioEntityMapper.toEntity(socio);
+            Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(usuario.getCedula());
+
+            if (optionalUsuarioEntity.isPresent()) {
+                usuarioRepository.updateUsuarioByCedula(usuario, usuario.getCedula());
+                usuarioRepository.updateSocioByUsuarioCedula(usuario, usuario.getCedula());
+
+                CuentaEntity cuenta = CuentaEntity.builder()
+                        .numeroCuenta(usuario.getCuenta().getNumeroCuenta())
+                        .nombreBanco(usuario.getCuenta().getNombreBanco())
+                        .build();
+                cuentaRepository.updateCuentaByUsuarioCedula(cuenta, usuario.getCedula());
+
+                return "Socio actualizado exitosamente";
+            } else {
+                usuarioRepository.save(usuario);
+                return "Nuevo socio creado exitosamente";
+            }
+        } catch (Exception e) {
+            throw new NegativeNotAllowedException(e.getMessage());
         }
     }
 
     @Override
     public Socio getSocio(long id) {
         try {
-            UsuarioEntity usuarioEntity = usuarioRepository.findByCedula(id);
-            return usuarioEntityMapper.toModel(usuarioEntity);
-        }catch (Exception e)
-        {
-            throw new NegativeNotAllowedException(e.getMessage());
+            Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(id);
+            if (optionalUsuarioEntity.isPresent()) {
+                return usuarioEntityMapper.toModel(optionalUsuarioEntity.get());
+            } else {
+                throw new NegativeNotAllowedException("Usuario no encontrado con la cédula: " + id);
+            }
+        } catch (Exception e) {
+            throw new NegativeNotAllowedException("Error al obtener el usuario con la cédula: " + id + ". " + e.getMessage());
         }
     }
 
@@ -43,21 +65,22 @@ public class SocioAdapter implements ISocioPersistencePort {
     public List<Socio> getAllSocio() {
         try {
             return usuarioEntityMapper.toModelList(usuarioRepository.findAll());
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new NegativeNotAllowedException(e.getMessage());
         }
     }
 
-    @Override
-    public void updateSocio(Socio socio) {
+    public void updateSocioByEstado(Socio socio) {
         try {
-            UsuarioEntity usuarioEntity = usuarioRepository.findByCedula(socio.getCedula());
-            usuarioEntity.setEstado(socio.isEstado());
-            usuarioRepository.updateByCedula(usuarioEntity, usuarioEntity.getCedula());
-        }catch (Exception e)
-        {
-            throw new NegativeNotAllowedException(e.getMessage());
+            Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(socio.getCedula());
+            if (optionalUsuarioEntity.isPresent()) {
+                usuarioRepository.updateEstadoByCedula(socio.isEstado(), socio.getCedula());
+            } else {
+                throw new NegativeNotAllowedException("Usuario no encontrado con la cédula: " + socio.getCedula());
+            }
+        } catch (Exception e) {
+            throw new NegativeNotAllowedException("Error al actualizar el estado del usuario: " + e.getMessage());
         }
     }
+
 }

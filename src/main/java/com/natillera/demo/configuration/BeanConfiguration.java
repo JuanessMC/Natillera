@@ -5,7 +5,13 @@ import com.natillera.demo.adapters.driven.jpa.mysql.adapter.SocioAdapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IPrestamoMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IUsuarioEntityMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoRepository;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.ICuentaRepository;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.ISocioRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
+import com.natillera.demo.adapters.driving.http.Utilities;
+import com.natillera.demo.adapters.driving.http.dto.response.PrestamoResponseList;
+import com.natillera.demo.adapters.driving.http.mapper.IPrestamoResponseMapper;
+import com.natillera.demo.adapters.driving.http.mapper.IUtilities;
 import com.natillera.demo.domain.api.IPrestamoServicePort;
 import com.natillera.demo.domain.api.ISocioServicePort;
 import com.natillera.demo.domain.api.usecase.PrestamoUseCase;
@@ -26,31 +32,33 @@ public class BeanConfiguration {
 
     private final IUsuarioRepository usuarioRepository;
     private final IUsuarioEntityMapper usuarioEntityMapper;
+    private final ICuentaRepository cuentaRepository;
     private final IPrestamoRepository prestamoRepository;
     private final IPrestamoMapper prestamoEntityMapper;
-
+    private final IPrestamoResponseMapper prestamoResponseMapper;
 
     @Bean
-    public ISocioPersistencePort socioPersistencePort()
-    {
-        return new SocioAdapter(usuarioRepository, usuarioEntityMapper);
+    public ISocioPersistencePort socioPersistencePort() {
+        return new SocioAdapter(usuarioRepository, usuarioEntityMapper, cuentaRepository);
     }
 
     @Bean
-    public IPrestamoPersistencePort prestamoPersistencePort()
-    {
+    public IPrestamoPersistencePort prestamoPersistencePort() {
         return new PrestamoAdapter(prestamoRepository, prestamoEntityMapper);
     }
 
     @Bean
-    public ISocioServicePort socioServicePort()
-    {
+    public IUtilities utilitiesConfig() {
+        return new Utilities(socioPersistencePort(), prestamoResponseMapper);
+    }
+
+    @Bean
+    public ISocioServicePort socioServicePort() {
         return new SocioUseCase(socioPersistencePort());
     }
 
     @Bean
-    public IPrestamoServicePort prestamoServicePort()
-    {
+    public IPrestamoServicePort prestamoServicePort() {
         return new PrestamoUseCase(prestamoPersistencePort());
     }
 

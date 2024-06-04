@@ -39,7 +39,10 @@ public class PrestamoAdapter implements IPrestamoPersistencePort {
     public void updatePrestamo(Prestamo prestamo) {
         try {
             PrestamoEntity prestamoEntity = prestamoRepository.findByIdPrestamo(prestamo.getIdPrestamo());
-            prestamoRepository.updateById(prestamoEntity, prestamoEntity.getIdPrestamo());
+            if (prestamoEntity == null) {
+                throw new NegativeNotAllowedException("Prestamo no encontrado");
+            }
+            prestamoRepository.updateById(prestamoEntityMapper.toEntity(prestamo), prestamo.getIdPrestamo());
         } catch (Exception e) {
             throw new NegativeNotAllowedException(e.getMessage());
         }

@@ -13,9 +13,11 @@ public interface IPrestamoResponseMapper {
     @Mapping(source = "valorPrestamo", target = "valorPrestamo")
     @Mapping(source = "tasaInteres", target = "tasaInteres")
     @Mapping(source = "plazoPago", target = "plazoPago")
+    @Mapping(source = "valorMensual", target = "valorMensual")
     @Mapping(source = "fecha", target = "fecha")
     @Mapping(source = "estadoPago", target = "estadoPago")
     @Mapping(source = "cedula", target = "cedula")
+    @Mapping(source = "observaciones", target = "observaciones")
     PrestamoResponse addRequestToPrestamo(Prestamo prestamo);
 
     List<PrestamoResponse> addRequestToPrestamoList(List<Prestamo> prestamo);

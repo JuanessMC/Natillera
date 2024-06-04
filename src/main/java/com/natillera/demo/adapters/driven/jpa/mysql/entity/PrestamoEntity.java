@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "prestamo")
@@ -38,6 +37,9 @@ public class PrestamoEntity {
     @Column(name = "plazo_pago")
     private int plazoPago;
 
+    @Column(name = "valor_mensual")
+    private Long valorMensual;
+
     @Column(name = "fecha")
     private LocalDate fecha;
 
@@ -47,4 +49,7 @@ public class PrestamoEntity {
     @ManyToOne
     @JoinColumn(name = "cedula")
     private SocioEntity socio;
+
+    @Column(name = "observaciones")
+    private String observaciones;
 }

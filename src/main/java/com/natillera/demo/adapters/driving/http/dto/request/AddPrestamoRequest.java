@@ -5,8 +5,10 @@ public record AddPrestamoRequest (
         long valorPrestamo,
         float tasaInteres,
         int plazoPago,
+        Long valorMensual,
         String fecha,
         String estadoPago,
-        long cedula){
+        Long cedula,
+        String observaciones){
 
 }
