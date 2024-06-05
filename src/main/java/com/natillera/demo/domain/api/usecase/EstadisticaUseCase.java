@@ -21,4 +21,9 @@ public class EstadisticaUseCase implements IEstadisticaServicePort {
     public Map<String, Object> getInteresesPorPeriodo() {
         return estadisticaPersistencePort.getInteresesPorPeriodo();
     }
+
+    @Override
+    public String getAllPrestamosAprovadosOrPendientes() {
+        return estadisticaPersistencePort.getAllPrestamosAprovadosOrPendientes();
+    }
 }

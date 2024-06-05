@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface IPrestamoRepository extends JpaRepository<PrestamoEntity, Long> {
 
@@ -24,4 +25,7 @@ public interface IPrestamoRepository extends JpaRepository<PrestamoEntity, Long>
             " p.observaciones = :#{#prestamoEntity.observaciones}" +
             " WHERE p.idPrestamo = :idPrestamo")
     void updateById(@Param("prestamoEntity") PrestamoEntity prestamoEntity, @Param("idPrestamo") Long idPrestamo);
+
+    @Query("SELECT p FROM PrestamoEntity p WHERE p.estadoPago = 'pendiente' or p.estadoPago = 'aprobado'")
+    List<PrestamoEntity> getAllPrestamosAprovadosOrPendientes();
 }

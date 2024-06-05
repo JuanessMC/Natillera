@@ -43,4 +43,18 @@ public class EstadisticaRestControllerAdapter {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/prestamos")
+    public ResponseEntity<StandardResponse<String>> getPrestamosEstadisticas() {
+        String estadistica = estadisticaServicePort.getAllPrestamosAprovadosOrPendientes();
+
+        StandardResponse<String> response = new StandardResponse<>(
+                "Prestamos obtenidos correctamente",
+                200,
+                LocalDateTime.now().toString()
+        );
+        response.setData(estadistica);
+
+        return ResponseEntity.ok(response);
+    }
 }

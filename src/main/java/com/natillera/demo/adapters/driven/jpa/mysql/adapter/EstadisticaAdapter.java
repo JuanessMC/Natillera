@@ -1,6 +1,9 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.adapter;
 
+import com.natillera.demo.adapters.driven.jpa.mysql.entity.PrestamoEntity;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
+import com.natillera.demo.domain.exception.GeneralException;
 import com.natillera.demo.domain.spi.IEstadisticaPersistencePort;
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +16,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EstadisticaAdapter implements IEstadisticaPersistencePort {
     private final IUsuarioRepository usuarioRepository;
+
+    private final IPrestamoRepository prestamoRepository;
+
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
 
     @Override
     public Map<String, Object> getPorcentajeRecaudado() {
@@ -37,10 +45,8 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
             estadisticasConPorcentaje.add(nuevoItem);
         }
 
-        DecimalFormat df = new DecimalFormat("#.##");
-
         Map<String, Object> response = new HashMap<>();
-        response.put("total", df.format(total));
+        response.put("total", decimalFormat.format(total));
         response.put("estadisticas", estadisticasConPorcentaje);
 
         return response;
@@ -51,5 +57,18 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
             return ((Number) estadisticas.get(0).get("total")).doubleValue();
         }
         return 0;
+    }
+
+    @Override
+    public String getAllPrestamosAprovadosOrPendientes() {
+        try {
+            final List<PrestamoEntity> prestamos = prestamoRepository.getAllPrestamosAprovadosOrPendientes();
+            final double sum = prestamos.stream()
+                    .mapToDouble(PrestamoEntity::getValorPrestamo)
+                    .sum();
+            return decimalFormat.format(sum);
+        } catch (Exception e) {
+            throw new GeneralException(e.getMessage());
+        }
     }
 }

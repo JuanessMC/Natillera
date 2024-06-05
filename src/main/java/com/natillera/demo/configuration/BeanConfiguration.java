@@ -66,7 +66,7 @@ public class BeanConfiguration {
     }
     @Bean
     public IEstadisticaPersistencePort estadisticaPersistencePort() {
-        return new EstadisticaAdapter(usuarioRepository);
+        return new EstadisticaAdapter(usuarioRepository, prestamoRepository);
     }
     @Bean
     public IUtilities utilitiesConfig() {
