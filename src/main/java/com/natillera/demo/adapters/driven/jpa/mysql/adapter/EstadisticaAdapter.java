@@ -17,24 +17,51 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EstadisticaAdapter implements IEstadisticaPersistencePort {
     private final IUsuarioRepository usuarioRepository;
-
     private final IPrestamoRepository prestamoRepository;
-
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
 
     @Override
     public Map<String, Object> getPorcentajeRecaudado() {
-        return calcularPorcentaje(usuarioRepository.getPagosResumen());
+        List<Map<String, Object>> estadisticas = usuarioRepository.getPagosResumen();
+        return calcularPorcentaje(estadisticas);
     }
 
     @Override
     public Map<String, Object> getInteresesPorPeriodo() {
-        return calcularPorcentaje(usuarioRepository.getInteresesPorPeriodo());
+        List<Map<String, Object>> estadisticas = usuarioRepository.getInteresesPorPeriodo();
+        return calcularPorcentaje(estadisticas);
+    }
+
+    @Override
+    public String getAllPrestamosAprovadosOrPendientes() {
+        try {
+            List<PrestamoEntity> prestamos = prestamoRepository.getAllPrestamosAprovadosOrPendientes();
+            double sum = prestamos.stream()
+                    .mapToDouble(PrestamoEntity::getValorPrestamo)
+                    .sum();
+            return decimalFormat.format(sum);
+        } catch (Exception e) {
+            throw new GeneralException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Map<String, Object> getGananciasPorNombre() {
+        try {
+            List<Object[]> estadisticas = usuarioRepository.getGananciasByNombre();
+            return calcularGananciasPorNombre(estadisticas);
+        } catch (Exception e) {
+            throw new GeneralException(e.getMessage());
+        }
     }
 
     private Map<String, Object> calcularPorcentaje(List<Map<String, Object>> estadisticas) {
         double total = obtenerTotal(estadisticas);
+
+            if(total == 0)
+            {
+                throw new GeneralException("Error al calcular porcentaje");
+            }
 
         List<Map<String, Object>> estadisticasConPorcentaje = new ArrayList<>();
         for (Map<String, Object> item : estadisticas) {
@@ -60,17 +87,43 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
         return 0;
     }
 
-    @Override
-    public String getAllPrestamosAprovadosOrPendientes() {
-        try {
-            final List<PrestamoEntity> prestamos = prestamoRepository.getAllPrestamosAprovadosOrPendientes();
-            final double sum = prestamos.stream()
-                    .mapToDouble(PrestamoEntity::getValorPrestamo)
-                    .sum();
-            return decimalFormat.format(sum);
-        } catch (Exception e) {
-            throw new GeneralException(e.getMessage());
+    private Map<String, Object> calcularGananciasPorNombre(List<Object[]> estadisticas) {
+        double total = calcularTotalGanancias(estadisticas, 0);
+        List<Map<String, Object>> estadisticasConPorcentaje = calcularEstadisticasConPorcentaje(estadisticas, new ArrayList<>());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("total", decimalFormat.format(total));
+        response.put("estadisticas", estadisticasConPorcentaje);
+
+        return response;
+    }
+
+    private double calcularTotalGanancias(List<Object[]> estadisticas, int index) {
+        if (index >= estadisticas.size()) {
+            return 0.0;
         }
+        double valor = ((Number) estadisticas.get(index)[1]).doubleValue();
+        return valor + calcularTotalGanancias(estadisticas, index + 1);
+    }
+
+    private List<Map<String, Object>> calcularEstadisticasConPorcentaje(List<Object[]> estadisticas, List<Map<String, Object>> estadisticasConPorcentaje) {
+        return calcularEstadisticasRecursivamente(estadisticas, 0, estadisticasConPorcentaje);
+    }
+
+    private List<Map<String, Object>> calcularEstadisticasRecursivamente(List<Object[]> estadisticas, int index, List<Map<String, Object>> estadisticasConPorcentaje) {
+        if (index >= estadisticas.size()) {
+            return estadisticasConPorcentaje;
+        }
+        Object[] item = estadisticas.get(index);
+        String nombre = (String) item[0];
+        double valor = ((Number) item[1]).doubleValue();
+
+        Map<String, Object> estadistica = new HashMap<>();
+        estadistica.put("name", nombre);
+        estadistica.put("value", valor);
+        estadisticasConPorcentaje.add(estadistica);
+
+        return calcularEstadisticasRecursivamente(estadisticas, index + 1, estadisticasConPorcentaje);
     }
 
     @Override
@@ -101,3 +154,4 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
         return statistic;
     }
 }
+

@@ -73,6 +73,10 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
             nativeQuery = true)
     List<Map<String, Object>> getInteresesPorPeriodo();
 
+    @Query(value = "SELECT m.nombre, SUM(m.valor_multa) AS total_multas " +
+            "FROM multa m " +
+            "GROUP BY m.nombre", nativeQuery = true)
+    List<Object[]> getGananciasByNombre();
 
     @Query(value = "SELECT SUM(valor_aporte) FROM aporte", nativeQuery = true)
     Double getTotalAportes();
@@ -85,7 +89,5 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
     @Query(value = "SELECT SUM(ganancias) FROM actividad", nativeQuery = true)
     Double getTotalActividades();
-
-
 
 }

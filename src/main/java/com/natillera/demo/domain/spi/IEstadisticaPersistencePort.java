@@ -4,10 +4,9 @@ import java.util.Map;
 
 public interface IEstadisticaPersistencePort {
     Map<String, Object> getPorcentajeRecaudado();
-
     Map<String, Object> getInteresesPorPeriodo();
-
     String getAllPrestamosAprovadosOrPendientes();
+    Map<String, Object> getGananciasPorNombre();
 
     Map<String, Object> getDineroRecaudado();
 
