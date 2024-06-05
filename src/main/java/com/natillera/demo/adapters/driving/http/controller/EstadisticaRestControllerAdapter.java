@@ -64,6 +64,14 @@ public class EstadisticaRestControllerAdapter {
         EstadisticaResponse estadistica = new EstadisticaResponse(estadisticaServicePort.getGananciasPorNombre());
 
         StandardResponse<EstadisticaResponse> response = new StandardResponse<>(
+                "Ganancias por nombre de multas obtenidas correctamente",
+                200,
+                LocalDateTime.now().toString()
+        );
+        response.setData(estadistica);
+
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/total_dinero")
     public ResponseEntity<StandardResponse<EstadisticaResponse>> getDineroRecaudado() {
