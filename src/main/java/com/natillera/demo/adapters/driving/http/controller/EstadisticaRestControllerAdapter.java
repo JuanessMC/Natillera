@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/estadisticas")
 @RequiredArgsConstructor
@@ -50,6 +51,20 @@ public class EstadisticaRestControllerAdapter {
 
         StandardResponse<String> response = new StandardResponse<>(
                 "Prestamos obtenidos correctamente",
+                200,
+                LocalDateTime.now().toString()
+        );
+        response.setData(estadistica);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/total_dinero")
+    public ResponseEntity<StandardResponse<EstadisticaResponse>> getDineroRecaudado() {
+        final EstadisticaResponse estadistica = new EstadisticaResponse(estadisticaServicePort.getDineroRecaudado());
+
+        StandardResponse<EstadisticaResponse> response = new StandardResponse<>(
+                "Dinero recaudado obtenido correctamente",
                 200,
                 LocalDateTime.now().toString()
         );
