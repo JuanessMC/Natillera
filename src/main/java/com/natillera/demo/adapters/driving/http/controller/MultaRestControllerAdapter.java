@@ -22,14 +22,15 @@ public class MultaRestControllerAdapter {
     private final IMultaRequestMapper multaRequestMapper;
 
     @PostMapping("/")
-    public ResponseEntity<StandardResponse<MultaResponse>> addOrUpdateMulta(@RequestBody AddMultaRequest addMultaRequest) {
-        String response = multaServicePort.addOrUpdateMulta(multaRequestMapper.addRequestToMulta(addMultaRequest));
+    public ResponseEntity<StandardResponse<MultaResponse>> saveMulta(@RequestBody AddMultaRequest addMultaRequest) {
+        Object[] response = multaServicePort.saveMulta(multaRequestMapper.addRequestToMulta(addMultaRequest));
+        int statusCode = (int) response[0];
+        String message = (String) response[1];
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new StandardResponse<>(
-                        response,
-                        200,
+                        message,
+                        statusCode,
                         LocalDateTime.now().toString())
                 );
     }
-
 }

@@ -1,7 +1,6 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,34 +16,40 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "multa")
+@Table(name = "prestamo")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
-public class MultaEntity {
+public class PrestamoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_multa")
-    private Integer idMulta;
+    @Column(name = "id_prestamo")
+    private Long idPrestamo;
 
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "valor_prestamo")
+    private Long valorPrestamo;
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "tasa_interes")
+    private float tasaInteres;
 
-    @Column(name = "valor_multa")
-    private float valorMulta;
+    @Column(name = "plazo_pago")
+    private int plazoPago;
+
+    @Column(name = "valor_mensual")
+    private Long valorMensual;
 
     @Column(name = "fecha")
     private LocalDate fecha;
 
     @Column(name = "estado_pago")
-    private boolean estado;
+    private String estadoPago;
 
     @ManyToOne
     @JoinColumn(name = "cedula")
     private SocioEntity socio;
+
+    @Column(name = "observaciones")
+    private String observaciones;
 }

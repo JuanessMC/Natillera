@@ -1,6 +1,6 @@
 package com.natillera.demo.configuration.exceptionhandler;
 
-import com.natillera.demo.domain.exception.NegativeNotAllowedException;
+import com.natillera.demo.domain.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class ControllerAdvisor {
 
-    @ExceptionHandler(NegativeNotAllowedException.class)
-    public ResponseEntity<ExceptionResponse> handleNegativeNotAllowedException(NegativeNotAllowedException exception)
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<ExceptionResponse> handleGeneralException(GeneralException exception)
     {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
-                exception.getMessage(), 400, LocalDateTime.now()));
+                exception.getMessage(), 400, LocalDateTime.now().toString()));
     }
 }
