@@ -5,6 +5,7 @@ import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IMultaEntityMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IMultaRepository;
 
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
+import com.natillera.demo.domain.exception.GeneralException;
 import com.natillera.demo.domain.model.Multa;
 import com.natillera.demo.domain.spi.IMultaPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -17,21 +18,19 @@ public class MultaAdapter implements IMultaPersistencePort {
     private final IMultaRepository multaRepository;
     private final IMultaEntityMapper multaEntityMapper;
     private final IUsuarioRepository usuarioRepository;
-
-
     @Override
-    public String saveMulta(Multa multa) {
+    public Object[] saveMulta(Multa multa) {
         try {
             Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findByCedula(multa.getCedula());
             if (optionalUsuarioEntity.isPresent()) {
                 multaRepository.save(multaEntityMapper.toEntity(multa));
-                return "Multa pagada exitosamente";
+                return new Object[]{201, "Multa pagada exitosamente"};
             } else {
 
-                throw new RuntimeException("No se encontró ningún socio con la cédula proporcionada.");
+                throw new GeneralException("No se encontró ningún socio con la cédula proporcionada.");
             }
         } catch (Exception e) {
-            return "Error al pagar la multa." + e.getMessage();
+            throw new GeneralException( e.getMessage());
         }
     }
 }

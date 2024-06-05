@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class ExceptionResponse {
     private final String message;
     private final int status;
-    private final LocalDateTime timestamp;
+    private final String timestamp;
 
-    public ExceptionResponse(String message, int status, LocalDateTime timestamp) {
+    public ExceptionResponse(String message, int status, String timestamp) {
         this.message = message;
         this.status = status;
         this.timestamp = timestamp;
@@ -21,7 +21,7 @@ public class ExceptionResponse {
         return status;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 }

@@ -5,7 +5,7 @@ import com.natillera.demo.adapters.driven.jpa.mysql.entity.UsuarioEntity;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IUsuarioEntityMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.ICuentaRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
-import com.natillera.demo.domain.exception.NegativeNotAllowedException;
+import com.natillera.demo.domain.exception.GeneralException;
 import com.natillera.demo.domain.model.Socio;
 import com.natillera.demo.domain.spi.ISocioPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class SocioAdapter implements ISocioPersistencePort {
                 return "Nuevo socio creado exitosamente";
             }
         } catch (Exception e) {
-            throw new NegativeNotAllowedException(e.getMessage());
+            throw new GeneralException(e.getMessage());
         }
     }
 
@@ -52,10 +52,10 @@ public class SocioAdapter implements ISocioPersistencePort {
             if (optionalUsuarioEntity.isPresent()) {
                 return usuarioEntityMapper.toModel(optionalUsuarioEntity.get());
             } else {
-                throw new NegativeNotAllowedException("Usuario no encontrado con la cédula: " + id);
+                throw new GeneralException("Usuario no encontrado con la cédula: " + id);
             }
         } catch (Exception e) {
-            throw new NegativeNotAllowedException("Error al obtener el usuario con la cédula: " + id + ". " + e.getMessage());
+            throw new GeneralException("Error al obtener el usuario con la cédula: " + id + ". " + e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class SocioAdapter implements ISocioPersistencePort {
         try {
             return usuarioEntityMapper.toModelList(usuarioRepository.findAll());
         } catch (Exception e) {
-            throw new NegativeNotAllowedException(e.getMessage());
+            throw new GeneralException(e.getMessage());
         }
     }
 @Override
@@ -74,10 +74,10 @@ public class SocioAdapter implements ISocioPersistencePort {
             if (optionalUsuarioEntity.isPresent()) {
                 usuarioRepository.updateEstadoByCedula(socio.isEstado(), socio.getCedula());
             } else {
-                throw new NegativeNotAllowedException("Usuario no encontrado con la cédula: " + socio.getCedula());
+                throw new GeneralException("Usuario no encontrado con la cédula: " + socio.getCedula());
             }
         } catch (Exception e) {
-            throw new NegativeNotAllowedException("Error al actualizar el estado del usuario: " + e.getMessage());
+            throw new GeneralException("Error al actualizar el estado del usuario: " + e.getMessage());
         }
     }
 

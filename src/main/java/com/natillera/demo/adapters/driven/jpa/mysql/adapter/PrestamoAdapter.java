@@ -3,7 +3,7 @@ package com.natillera.demo.adapters.driven.jpa.mysql.adapter;
 import com.natillera.demo.adapters.driven.jpa.mysql.entity.PrestamoEntity;
 import com.natillera.demo.adapters.driven.jpa.mysql.mapper.IPrestamoMapper;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoRepository;
-import com.natillera.demo.domain.exception.NegativeNotAllowedException;
+import com.natillera.demo.domain.exception.GeneralException;
 import com.natillera.demo.domain.model.Prestamo;
 import com.natillera.demo.domain.spi.IPrestamoPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +24,14 @@ public class PrestamoAdapter implements IPrestamoPersistencePort {
                     .map(prestamoEntityMapper::toModel)
                     .toList();
         } catch (Exception e) {
-            throw new NegativeNotAllowedException(e.getMessage());
+            throw new GeneralException(e.getMessage());
         }
     }
 
     @Override
     public Prestamo getPrestamoById(Long idPrestamo) {
         PrestamoEntity prestamoEntity = prestamoRepository.findById(idPrestamo)
-                .orElseThrow(() -> new NegativeNotAllowedException("Prestamo no encontrado"));
+                .orElseThrow(() -> new GeneralException("Prestamo no encontrado"));
         return prestamoEntityMapper.toModel(prestamoEntity);
     }
 
@@ -40,11 +40,11 @@ public class PrestamoAdapter implements IPrestamoPersistencePort {
         try {
             PrestamoEntity prestamoEntity = prestamoRepository.findByIdPrestamo(prestamo.getIdPrestamo());
             if (prestamoEntity == null) {
-                throw new NegativeNotAllowedException("Prestamo no encontrado");
+                throw new GeneralException("Prestamo no encontrado");
             }
             prestamoRepository.updateById(prestamoEntityMapper.toEntity(prestamo), prestamo.getIdPrestamo());
         } catch (Exception e) {
-            throw new NegativeNotAllowedException(e.getMessage());
+            throw new GeneralException(e.getMessage());
         }
     }
 }
