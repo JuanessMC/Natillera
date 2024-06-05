@@ -3,18 +3,22 @@ package com.natillera.demo.domain.api.usecase;
 import com.natillera.demo.domain.api.IEstadisticaServicePort;
 import com.natillera.demo.domain.spi.IEstadisticaPersistencePort;
 
-import java.util.List;
 import java.util.Map;
 
 public class EstadisticaUseCase implements IEstadisticaServicePort {
-    private final IEstadisticaPersistencePort persistencePort;
+    private final IEstadisticaPersistencePort estadisticaPersistencePort;
 
-    public EstadisticaUseCase(IEstadisticaPersistencePort persistencePort) {
-        this.persistencePort = persistencePort;
+    public EstadisticaUseCase(IEstadisticaPersistencePort estadisticaPersistencePort) {
+        this.estadisticaPersistencePort = estadisticaPersistencePort;
     }
 
     @Override
-    public Map<String, Object> getPagosResumen() {
-        return persistencePort.getPagosResumen();
+    public Map<String, Object> getPorcentajeRecaudado() {
+        return estadisticaPersistencePort.getPorcentajeRecaudado();
+    }
+
+    @Override
+    public Map<String, Object> getInteresesPorPeriodo() {
+        return estadisticaPersistencePort.getInteresesPorPeriodo();
     }
 }

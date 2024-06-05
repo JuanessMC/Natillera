@@ -33,25 +33,48 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
     Optional<UsuarioEntity> findByCedula(Long cedula);
 
     @Query(value = "SELECT name, value, total FROM (" +
-            "    SELECT 'Intereses' AS name, SUM(p.tasa_interes) AS value, " +
-            "           (SELECT SUM(tasa_interes) FROM prestamo) + " +
+            "    SELECT 'Intereses' AS name, SUM(p.valor_prestamo * p.tasa_interes / 100) AS value, " +
+            "           (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE estado_pago = 'pagado') + " +
             "           (SELECT SUM(valor_multa) FROM multa) + " +
             "           (SELECT SUM(valor_aporte) FROM aporte) AS total " +
-            "    FROM prestamo p " +
+            "    FROM prestamo p WHERE p.estado_pago = 'pagado' " +
             "    UNION ALL " +
             "    SELECT 'Multas' AS name, SUM(m.valor_multa) AS value, " +
-            "           (SELECT SUM(tasa_interes) FROM prestamo) + " +
+            "           (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE estado_pago = 'pagado') + " +
             "           (SELECT SUM(valor_multa) FROM multa) + " +
             "           (SELECT SUM(valor_aporte) FROM aporte) AS total " +
             "    FROM multa m " +
             "    UNION ALL " +
             "    SELECT 'Aportes' AS name, SUM(a.valor_aporte) AS value, " +
-            "           (SELECT SUM(tasa_interes) FROM prestamo) + " +
+            "           (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE estado_pago = 'pagado') + " +
             "           (SELECT SUM(valor_multa) FROM multa) + " +
             "           (SELECT SUM(valor_aporte) FROM aporte) AS total " +
             "    FROM aporte a" +
             ") AS subquery",
             nativeQuery = true)
     List<Map<String, Object>> getPagosResumen();
+
+
+    @Query(value = "SELECT 'Enero-Abril' AS name, SUM(valor_prestamo * tasa_interes / 100) AS value, " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 1 AND 4 AND estado_pago = 'pagado') + " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 5 AND 9 AND estado_pago = 'pagado') + " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 10 AND 12 AND estado_pago = 'pagado') AS total " +
+            "FROM prestamo WHERE MONTH(fecha) BETWEEN 1 AND 4 AND estado_pago = 'pagado' " +
+            "UNION ALL " +
+            "SELECT 'Mayo-Septiembre' AS name, SUM(valor_prestamo * tasa_interes / 100) AS value, " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 1 AND 4 AND estado_pago = 'pagado') + " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 5 AND 9 AND estado_pago = 'pagado') + " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 10 AND 12 AND estado_pago = 'pagado') AS total " +
+            "FROM prestamo WHERE MONTH(fecha) BETWEEN 5 AND 9 AND estado_pago = 'pagado' " +
+            "UNION ALL " +
+            "SELECT 'Octubre-Diciembre' AS name, SUM(valor_prestamo * tasa_interes / 100) AS value, " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 1 AND 4 AND estado_pago = 'pagado') + " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 5 AND 9 AND estado_pago = 'pagado') + " +
+            "       (SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE MONTH(fecha) BETWEEN 10 AND 12 AND estado_pago = 'pagado') AS total " +
+            "FROM prestamo WHERE MONTH(fecha) BETWEEN 10 AND 12 AND estado_pago = 'pagado'",
+            nativeQuery = true)
+    List<Map<String, Object>> getInteresesPorPeriodo();
+
+
 
 }
