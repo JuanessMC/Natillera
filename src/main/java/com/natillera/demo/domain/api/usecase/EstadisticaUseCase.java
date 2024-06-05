@@ -17,4 +17,9 @@ public class EstadisticaUseCase implements IEstadisticaServicePort {
     public Map<String, Object> getPagosResumen() {
         return persistencePort.getPagosResumen();
     }
+
+    @Override
+    public Double getAllPrestamosAprovadosOrPendientes() {
+        return persistencePort.getAllPrestamosAprovadosOrPendientes();
+    }
 }

@@ -5,4 +5,6 @@ import java.util.Map;
 
 public interface IEstadisticaServicePort {
     Map<String, Object> getPagosResumen();
+
+    Double getAllPrestamosAprovadosOrPendientes();
 }

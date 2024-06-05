@@ -1,6 +1,10 @@
 package com.natillera.demo.adapters.driven.jpa.mysql.adapter;
 
+import com.natillera.demo.adapters.driven.jpa.mysql.entity.PrestamoEntity;
+import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
+import com.natillera.demo.domain.exception.GeneralException;
+import com.natillera.demo.domain.model.Prestamo;
 import com.natillera.demo.domain.spi.IEstadisticaPersistencePort;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +16,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EstadisticaAdapter implements IEstadisticaPersistencePort {
     private final IUsuarioRepository usuarioRepository;
+
+    private final IPrestamoRepository prestamoRepository;
     @Override
     public Map<String, Object> getPagosResumen() {
         List<Map<String, Object>> estadisticas = usuarioRepository.getPagosResumen();
@@ -35,6 +41,18 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
         response.put("estadisticas", estadisticasConPorcentaje);
 
         return response;
+    }
+
+    @Override
+    public Double getAllPrestamosAprovadosOrPendientes() {
+        try {
+            final List<PrestamoEntity> prestamos = prestamoRepository.getAllPrestamosAprovadosOrPendientes();
+            return prestamos.stream()
+                    .mapToDouble(PrestamoEntity::getValorPrestamo)
+                    .sum();
+        } catch (Exception e) {
+            throw new GeneralException(e.getMessage());
+        }
     }
 
 }
