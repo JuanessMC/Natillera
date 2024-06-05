@@ -4,10 +4,10 @@ import com.natillera.demo.adapters.driven.jpa.mysql.entity.PrestamoEntity;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IPrestamoRepository;
 import com.natillera.demo.adapters.driven.jpa.mysql.repository.IUsuarioRepository;
 import com.natillera.demo.domain.exception.GeneralException;
-import com.natillera.demo.domain.model.Prestamo;
 import com.natillera.demo.domain.spi.IEstadisticaPersistencePort;
 import lombok.RequiredArgsConstructor;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,13 +18,19 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
     private final IUsuarioRepository usuarioRepository;
 
     private final IPrestamoRepository prestamoRepository;
+
     @Override
-    public Map<String, Object> getPagosResumen() {
-        List<Map<String, Object>> estadisticas = usuarioRepository.getPagosResumen();
-        double total = 1;
-        if (!estadisticas.isEmpty()) {
-            total = ((Number) estadisticas.get(0).get("total")).doubleValue();
-        }
+    public Map<String, Object> getPorcentajeRecaudado() {
+        return calcularPorcentaje(usuarioRepository.getPagosResumen());
+    }
+
+    @Override
+    public Map<String, Object> getInteresesPorPeriodo() {
+        return calcularPorcentaje(usuarioRepository.getInteresesPorPeriodo());
+    }
+
+    private Map<String, Object> calcularPorcentaje(List<Map<String, Object>> estadisticas) {
+        double total = obtenerTotal(estadisticas);
 
         List<Map<String, Object>> estadisticasConPorcentaje = new ArrayList<>();
         for (Map<String, Object> item : estadisticas) {
@@ -36,11 +42,20 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
             estadisticasConPorcentaje.add(nuevoItem);
         }
 
+        DecimalFormat df = new DecimalFormat("#.##");
+
         Map<String, Object> response = new HashMap<>();
-        response.put("total", total);
+        response.put("total", df.format(total));
         response.put("estadisticas", estadisticasConPorcentaje);
 
         return response;
+    }
+
+    private double obtenerTotal(List<Map<String, Object>> estadisticas) {
+        if (!estadisticas.isEmpty()) {
+            return ((Number) estadisticas.get(0).get("total")).doubleValue();
+        }
+        return 0;
     }
 
     @Override
@@ -54,5 +69,4 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
             throw new GeneralException(e.getMessage());
         }
     }
-
 }

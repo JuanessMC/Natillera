@@ -16,12 +16,26 @@ public class EstadisticaRestControllerAdapter {
 
     private final IEstadisticaServicePort estadisticaServicePort;
 
-    @GetMapping("/pagos")
-    public ResponseEntity<StandardResponse<EstadisticaResponse>> getPagosEstadisticas() {
-        EstadisticaResponse estadistica = new EstadisticaResponse(estadisticaServicePort.getPagosResumen());
+    @GetMapping("/recaudado")
+    public ResponseEntity<StandardResponse<EstadisticaResponse>> getPorcentajeRecaudado() {
+        EstadisticaResponse estadistica = new EstadisticaResponse(estadisticaServicePort.getPorcentajeRecaudado());
 
         StandardResponse<EstadisticaResponse> response = new StandardResponse<>(
                 "Ganancias obtenidas correctamente",
+                200,
+                LocalDateTime.now().toString()
+        );
+        response.setData(estadistica);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/intereses/periodos")
+    public ResponseEntity<StandardResponse<EstadisticaResponse>> getPagosEstadisticas() {
+        EstadisticaResponse estadistica = new EstadisticaResponse(estadisticaServicePort.getInteresesPorPeriodo());
+
+        StandardResponse<EstadisticaResponse> response = new StandardResponse<>(
+                "Ganancias de intereses obtenida correctamente",
                 200,
                 LocalDateTime.now().toString()
         );
