@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,5 +71,33 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
         } catch (Exception e) {
             throw new GeneralException(e.getMessage());
         }
+    }
+
+    @Override
+    public Map<String, Object> getDineroRecaudado() {
+
+        final Double totalAportes = usuarioRepository.getTotalAportes();
+        final Double totalInteresesPagados = usuarioRepository.getTotalInteresesPagados();
+        final Double totalMultas = usuarioRepository.getTotalMultas();
+        final Double totalActividades = usuarioRepository.getTotalActividades();
+
+        List<Map<String, Object>> estadisticas = Arrays.asList(
+                createStatistic("multas", totalMultas),
+                createStatistic("aportes", totalAportes),
+                createStatistic("actividades", totalActividades),
+                createStatistic("intereses", totalInteresesPagados)
+        );
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("estadisticas", estadisticas);
+
+        return data;
+    }
+
+    private Map<String, Object> createStatistic(String name, Double value) {
+        Map<String, Object> statistic = new HashMap<>();
+        statistic.put("name", name);
+        statistic.put("value", decimalFormat.format(value));
+        return statistic;
     }
 }

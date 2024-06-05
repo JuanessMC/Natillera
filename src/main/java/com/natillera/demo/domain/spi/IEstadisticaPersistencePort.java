@@ -9,4 +9,6 @@ public interface IEstadisticaPersistencePort {
 
     String getAllPrestamosAprovadosOrPendientes();
 
+    Map<String, Object> getDineroRecaudado();
+
 }
