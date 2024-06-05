@@ -78,4 +78,16 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
             "GROUP BY m.nombre", nativeQuery = true)
     List<Object[]> getGananciasByNombre();
 
+    @Query(value = "SELECT SUM(valor_aporte) FROM aporte", nativeQuery = true)
+    Double getTotalAportes();
+
+    @Query(value = "SELECT SUM(valor_multa) FROM multa", nativeQuery = true)
+    Double getTotalMultas();
+
+    @Query(value = "SELECT SUM(valor_prestamo * tasa_interes / 100) FROM prestamo WHERE estado_pago = 'pagado'", nativeQuery = true)
+    Double getTotalInteresesPagados();
+
+    @Query(value = "SELECT SUM(ganancias) FROM actividad", nativeQuery = true)
+    Double getTotalActividades();
+
 }

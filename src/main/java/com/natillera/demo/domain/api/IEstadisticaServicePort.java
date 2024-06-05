@@ -7,4 +7,5 @@ public interface IEstadisticaServicePort {
     Map<String, Object> getInteresesPorPeriodo();
     String getAllPrestamosAprovadosOrPendientes();
     Map<String, Object> getGananciasPorNombre();
+    Map<String, Object> getDineroRecaudado();
 }
