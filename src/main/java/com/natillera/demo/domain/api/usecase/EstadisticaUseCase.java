@@ -23,7 +23,7 @@ public class EstadisticaUseCase implements IEstadisticaServicePort {
     }
 
     @Override
-    public Double getAllPrestamosAprovadosOrPendientes() {
+    public String getAllPrestamosAprovadosOrPendientes() {
         return estadisticaPersistencePort.getAllPrestamosAprovadosOrPendientes();
     }
 }

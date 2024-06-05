@@ -7,5 +7,5 @@ public interface IEstadisticaServicePort {
 
     Map<String, Object> getInteresesPorPeriodo();
 
-    Double getAllPrestamosAprovadosOrPendientes();
+    String getAllPrestamosAprovadosOrPendientes();
 }

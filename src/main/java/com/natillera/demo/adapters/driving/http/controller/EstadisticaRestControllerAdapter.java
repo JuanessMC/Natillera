@@ -45,10 +45,10 @@ public class EstadisticaRestControllerAdapter {
     }
 
     @GetMapping("/prestamos")
-    public ResponseEntity<StandardResponse<Double>> getPrestamosEstadisticas() {
-        Double estadistica = estadisticaServicePort.getAllPrestamosAprovadosOrPendientes();
+    public ResponseEntity<StandardResponse<String>> getPrestamosEstadisticas() {
+        String estadistica = estadisticaServicePort.getAllPrestamosAprovadosOrPendientes();
 
-        StandardResponse<Double> response = new StandardResponse<>(
+        StandardResponse<String> response = new StandardResponse<>(
                 "Prestamos obtenidos correctamente",
                 200,
                 LocalDateTime.now().toString()

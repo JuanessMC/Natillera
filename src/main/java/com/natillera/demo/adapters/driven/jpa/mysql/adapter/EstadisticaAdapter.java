@@ -19,6 +19,9 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
 
     private final IPrestamoRepository prestamoRepository;
 
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+
     @Override
     public Map<String, Object> getPorcentajeRecaudado() {
         return calcularPorcentaje(usuarioRepository.getPagosResumen());
@@ -42,10 +45,8 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
             estadisticasConPorcentaje.add(nuevoItem);
         }
 
-        DecimalFormat df = new DecimalFormat("#.##");
-
         Map<String, Object> response = new HashMap<>();
-        response.put("total", df.format(total));
+        response.put("total", decimalFormat.format(total));
         response.put("estadisticas", estadisticasConPorcentaje);
 
         return response;
@@ -59,12 +60,13 @@ public class EstadisticaAdapter implements IEstadisticaPersistencePort {
     }
 
     @Override
-    public Double getAllPrestamosAprovadosOrPendientes() {
+    public String getAllPrestamosAprovadosOrPendientes() {
         try {
             final List<PrestamoEntity> prestamos = prestamoRepository.getAllPrestamosAprovadosOrPendientes();
-            return prestamos.stream()
+            final double sum = prestamos.stream()
                     .mapToDouble(PrestamoEntity::getValorPrestamo)
                     .sum();
+            return decimalFormat.format(sum);
         } catch (Exception e) {
             throw new GeneralException(e.getMessage());
         }
