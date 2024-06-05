@@ -14,6 +14,6 @@ public interface ICuentaRepository extends JpaRepository<CuentaEntity, Long> {
     Optional<CuentaEntity> findByUsuario(UsuarioEntity usuario);
     @Modifying
     @Transactional
-    @Query("UPDATE CuentaEntity c SET c.nombreBanco = :#{#cuenta.nombreBanco}, c.numeroCuenta = :#{#cuenta.numeroCuenta} WHERE c.usuario.cedula = :cedula")
+    @Query("UPDATE CuentaEntity c SET c.nombreBanco = :#{#cuenta.nombreBanco}, c.numeroCuenta = :#{#cuenta.numeroCuenta}, c.tipoCuenta.id = :#{#cuenta.tipoCuenta.id} WHERE c.usuario.cedula = :cedula")
     void updateCuentaByUsuarioCedula(@Param("cuenta") CuentaEntity cuenta, @Param("cedula") Long cedula);
 }

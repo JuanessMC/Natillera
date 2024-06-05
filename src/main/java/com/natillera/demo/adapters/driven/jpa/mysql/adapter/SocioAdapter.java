@@ -32,6 +32,7 @@ public class SocioAdapter implements ISocioPersistencePort {
                 CuentaEntity cuenta = CuentaEntity.builder()
                         .numeroCuenta(usuario.getCuenta().getNumeroCuenta())
                         .nombreBanco(usuario.getCuenta().getNombreBanco())
+                        .tipoCuenta(usuario.getCuenta().getTipoCuenta())
                         .build();
                 cuentaRepository.updateCuentaByUsuarioCedula(cuenta, usuario.getCedula());
 
