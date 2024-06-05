@@ -7,7 +7,6 @@ public interface IEstadisticaPersistencePort {
     Map<String, Object> getInteresesPorPeriodo();
     String getAllPrestamosAprovadosOrPendientes();
     Map<String, Object> getGananciasPorNombre();
-
     Map<String, Object> getDineroRecaudado();
 
 }
